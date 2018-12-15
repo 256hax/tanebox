@@ -1,0 +1,79 @@
+/**
+ * Theme Name: Twenty Seventeen-Child
+ * Template:   twentyseventeen
+ **/
+
+* { font-family: "Rounded Mplus 1c"; } /* Google Fonts */
+
+.site-title {	font-weight: normal; }
+
+h1 {
+	margin: 50px 0 0 0;
+}
+
+h2 {
+	margin: 100px 0 50px;
+}
+
+/* disable text uppercase */
+/*
+h5,
+.site-title,
+.page .panel-content .entry-title,
+.page-title,
+body.page:not(.twentyseventeen-front-page) .entry-title,
+.entry-meta,
+.entry-footer .cat-links,
+.entry-footer .tags-links,
+.nav-subtitle,
+.comment-metadata,
+h2.widget-title,
+.widget_rss .rss-date,
+.widget_rss li cite,
+.site-content .wp-playlist-current-item .wp-playlist-item-artist,
+.twentyseventeen-customizer.twentyseventeen-front-page .twentyseventeen-panel .twentyseventeen-panel-title {
+	text-transform: none;
+}
+*/
+
+/* Single Post */
+
+/* カスタム投稿タイプのスタイルを反映する。
+　　single-postと同一のデザインにしたいが、
+　　カスタム投稿タイプ（例：single-keyboardなど）は、
+　　body classにsingle-postが追加されないため、
+　　single-postもカスタム投稿タイプも共通で出力されるclassの「.single」に
+　　スタイルを設定。主にwidth設定だけでOK。
+*/
+.single:not(.has-sidebar) #primary,
+.page.page-one-column:not(.twentyseventeen-front-page) #primary {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 740px;
+}
+
+@media screen and (min-width: 48em) {
+
+	/* Product */
+	.single .entry-title,
+	.page .entry-title {
+		font-size: 26px;
+		font-size: 1.625rem;
+	}
+}
+
+/* Eye-Catch Image */
+.single-featured-image-header {
+	height: 450px; /* Trimming height */
+	overflow: hidden;
+	position: relative;
+}
+
+.single-featured-image-header img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}

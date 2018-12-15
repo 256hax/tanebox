@@ -1,0 +1,183 @@
+# Copyright (C) 2016 Maintainn
+# This file is distributed under the same license as the Maintainn Dashboard Widget package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Maintainn Dashboard Widget 1.2.2\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/maintainn-dashboard-widget\n"
+"POT-Creation-Date: 2016-01-11 21:45:41+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.3\n"
+
+#: functions-tmp/functions-tmp-more.php:158 views/system-info.php:81
+msgid "Your server supports fsockopen."
+msgstr ""
+
+#: functions-tmp/functions-tmp-more.php:158 views/system-info.php:81
+msgid "Your server does not support fsockopen."
+msgstr ""
+
+#: functions-tmp/functions-tmp-more.php:159 views/system-info.php:82
+msgid "Your server supports cURL."
+msgstr ""
+
+#: functions-tmp/functions-tmp-more.php:159 views/system-info.php:82
+msgid "Your server does not support cURL."
+msgstr ""
+
+#: functions-tmp/functions-tmp-more.php:160 views/system-info.php:83
+msgid "Your server has the SOAP Client enabled."
+msgstr ""
+
+#: functions-tmp/functions-tmp-more.php:160 views/system-info.php:83
+msgid "Your server does not have the SOAP Client enabled."
+msgstr ""
+
+#: functions-tmp/functions-tmp-more.php:161 views/system-info.php:84
+msgid "Your server has SUHOSIN installed."
+msgstr ""
+
+#: functions-tmp/functions-tmp-more.php:161 views/system-info.php:84
+msgid "Your server does not have SUHOSIN installed."
+msgstr ""
+
+#: includes/dashboard.php:25
+msgid "Submit a Support Ticket"
+msgstr ""
+
+#: includes/dashboard.php:26
+msgid "Your Account"
+msgstr ""
+
+#: includes/dashboard.php:27
+msgid "Your Site Info"
+msgstr ""
+
+#: includes/dashboard.php:28
+msgid "Scan My Site"
+msgstr ""
+
+#: includes/dashboard.php:29
+msgid "Add Ons"
+msgstr ""
+
+#: includes/dashboard.php:71 includes/dashboard.php:78
+#: includes/dashboard.php:86
+msgid "Maintainn Support"
+msgstr ""
+
+#: includes/dashboard.php:91
+msgid "Send a support request"
+msgstr ""
+
+#: includes/dashboard.php:92
+msgid "Your Maintainn Account"
+msgstr ""
+
+#: includes/dashboard.php:93
+msgid "Get your site info"
+msgstr ""
+
+#: includes/dashboard.php:121
+msgid "Hi, %s!"
+msgstr ""
+
+#: includes/dashboard.php:125
+msgid "Please submit a ticket below, or select from other helpful resources!"
+msgstr ""
+
+#: includes/dashboard.php:145
+msgid "Coming Soon"
+msgstr ""
+
+#: includes/dashboard.php:199
+msgid "Send"
+msgstr ""
+
+#: includes/dashboard.php:205
+msgid ""
+"Soon, we'll be integrating your account information into your dashboard. "
+"For now, please sign in at Maintainn.com:"
+msgstr ""
+
+#: includes/dashboard.php:206
+msgid "Click here to sign in to your Maintainn account."
+msgstr ""
+
+#: includes/dashboard.php:212
+msgid ""
+"Please copy the information below and paste it into your support ticket if "
+"you're having severe site issues."
+msgstr ""
+
+#: includes/dashboard.php:246
+msgid "There was issue while sending ticket."
+msgstr ""
+
+#: includes/dashboard.php:248
+msgid "Message was successfully sent."
+msgstr ""
+
+#: includes/dashboard.php:255
+msgid "Cheatin&#8217; uh?"
+msgstr ""
+
+#: includes/dashboard.php:389
+msgid "Verify core files"
+msgstr ""
+
+#: includes/dashboard.php:390
+msgid "Check core checksums"
+msgstr ""
+
+#: includes/dashboard.php:406
+msgid "There was an error running checksums test."
+msgstr ""
+
+#: includes/scanner.php:63
+msgid "Maintainn Scanner"
+msgstr ""
+
+#: maintainn-dashboard-widget.php:241
+msgid ""
+"Maintainn Scanner is missing requirements and has been <a "
+"href=\"%s\">deactivated</a>. Please make sure all requirements are "
+"available."
+msgstr ""
+
+#: vendor/github-updater.php:371
+msgid "Renaming %s to %s&#8230;"
+msgstr ""
+
+#: vendor/github-updater.php:379
+msgid "Rename successful&#8230;"
+msgstr ""
+
+#: vendor/github-updater.php:384
+msgid "Unable to rename downloaded repository."
+msgstr ""
+
+#: views/system-info.php:52
+msgid "Unknown"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Maintainn Dashboard Widget"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://maintainn.com/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A plugin to connect Maintainn Customers with Awesome support and resources"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Maintainn"
+msgstr ""

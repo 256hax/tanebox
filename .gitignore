@@ -1,19 +1,33 @@
+#----------------------------------
+# /home/[user]/
+#----------------------------------
+.bash_history
+.bash_logout
+.cache
+.htpasswd
+.ssh
+.pki
+.vim
+.viminfo
+**/log/*
+
+#----------------------------------
+# WordPress
+#----------------------------------
 *.log
 wp-config.php
-wp-content/advanced-cache.php
-wp-content/backup-db/
-wp-content/backups/
-wp-content/blogs.dir/
-wp-content/cache/
-wp-content/upgrade/
-wp-content/uploads/
-wp-content/mu-plugins/
-wp-content/wp-cache-config.php
-wp-content/plugins/hello.php
+**/wp-content/advanced-cache.php
+**/wp-content/backup-db/*
+**/wp-content/backups/*
+**/wp-content/cache/*
+**/wp-content/uploads/backwpup-*
+**/wp-content/uploads/backwpup-*
+**/wp-content/uploads/wp-security-audit-log/*
 
-/.htaccess
-/license.txt
-/readme.html
-/sitemap.xml
-/sitemap.xml.gz
-
+#----------------------------------
+# Editor Tool and Mac Config
+#----------------------------------
+# Atom Remote-FTP
+.ftpconfig
+# Mac
+.DS_Store
