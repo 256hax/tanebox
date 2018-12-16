@@ -1,0 +1,16 @@
+# （行頭の # マークはコメント行を示す）
+# +------------ 分 (0 - 59)
+# | +---------- 時 (0 - 23)
+# | | +-------- 日 (1 - 31)
+# | | | +------ 月 (1 - 12)
+# | | | | +---- 曜日 (0 - 6) (日曜日=0)
+# | | | | |
+# * * * * * 実行されるコマンド
+
+07 03 * * 0 /usr/bin/kusanagi update cert
+
+# renew Let's Encrypt SSL cert
+#50 3 * * 5 certbot-auto renew --post-hook "systemctl restart nginx" > /dev/null 2>&1
+50 3 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/root-html -d tanebox.com --post-hook "systemctl restart ngin    x" > /dev/null 2>&1
+50 3 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/blog/DocumentRoot -d blog.tanebox.com --post-hook "systemctl     restart nginx" > /dev/null 2>&1
+50 3 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/keyboards/DocumentRoot -d keyboards.tanebox.com --post-hook     "systemctl restart nginx" > /dev/null 2>&1

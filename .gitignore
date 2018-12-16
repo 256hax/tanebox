@@ -10,6 +10,8 @@
 .vim
 .viminfo
 **/log/*
+.mysql_history
+kusanagi.pem
 
 #----------------------------------
 # WordPress
