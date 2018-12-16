@@ -10,7 +10,9 @@
 07 03 * * 0 /usr/bin/kusanagi update cert
 
 # renew Let's Encrypt SSL cert
-#50 3 * * 5 certbot-auto renew --post-hook "systemctl restart nginx" > /dev/null 2>&1
-50 3 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/root-html -d tanebox.com --post-hook "systemctl restart ngin    x" > /dev/null 2>&1
-50 3 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/blog/DocumentRoot -d blog.tanebox.com --post-hook "systemctl     restart nginx" > /dev/null 2>&1
-50 3 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/keyboards/DocumentRoot -d keyboards.tanebox.com --post-hook     "systemctl restart nginx" > /dev/null 2>&1
+30 03 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/root-html -d tanebox.com --post-hook "systemctl restart nginx" > /dev/null 2>&1
+40 03 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/blog/DocumentRoot -d blog.tanebox.com --post-hook "systemctl restart nginx" > /dev/null 2>&1
+50 03 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/keyboards/DocumentRoot -d keyboards.tanebox.com --post-hook "systemctl restart nginx" > /dev/null 2>&1
+
+# mysqldump for backup
+mysqldump --defaults-file=/root/.my.cnf --all-databases > /var/backup/mysql/mysqldump-all-databases_day`date +"%d"`.sql

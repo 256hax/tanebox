@@ -1,14 +1,14 @@
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root         1  0.0  0.2  51836  2928 ?        Ss    7月14  23:15 /usr/lib/systemd/systemd --system --deserialize 21
+root         1  0.0  0.2  51836  2936 ?        Ss    7月14  23:19 /usr/lib/systemd/systemd --system --deserialize 21
 root         2  0.0  0.0      0     0 ?        S     7月14   0:04 [kthreadd]
 root         3  0.0  0.0      0     0 ?        S     7月14   0:21 [ksoftirqd/0]
 root         5  0.0  0.0      0     0 ?        S<    7月14   0:00 [kworker/0:0H]
 root         7  0.0  0.0      0     0 ?        S     7月14   0:06 [migration/0]
 root         8  0.0  0.0      0     0 ?        S     7月14   0:00 [rcu_bh]
-root         9  0.0  0.0      0     0 ?        S     7月14  12:46 [rcu_sched]
+root         9  0.0  0.0      0     0 ?        S     7月14  12:47 [rcu_sched]
 root        10  0.0  0.0      0     0 ?        S<    7月14   0:00 [lru-add-drain]
 root        11  0.0  0.0      0     0 ?        S     7月14   0:58 [watchdog/0]
-root        12  0.0  0.0      0     0 ?        S     7月14   1:40 [watchdog/1]
+root        12  0.0  0.0      0     0 ?        S     7月14   1:41 [watchdog/1]
 root        13  0.0  0.0      0     0 ?        S     7月14   0:05 [migration/1]
 root        14  0.0  0.0      0     0 ?        S     7月14   0:10 [ksoftirqd/1]
 root        16  0.0  0.0      0     0 ?        S<    7月14   0:00 [kworker/1:0H]
@@ -23,7 +23,7 @@ root        25  0.0  0.0      0     0 ?        S<    7月14   0:00 [bioset]
 root        26  0.0  0.0      0     0 ?        S<    7月14   0:00 [kblockd]
 root        27  0.0  0.0      0     0 ?        S<    7月14   0:00 [md]
 root        28  0.0  0.0      0     0 ?        S<    7月14   0:00 [edac-poller]
-root        38  0.0  0.0      0     0 ?        S     7月14   1:23 [kswapd0]
+root        38  0.0  0.0      0     0 ?        S     7月14   1:25 [kswapd0]
 root        39  0.0  0.0      0     0 ?        SN    7月14   0:00 [ksmd]
 root        40  0.0  0.0      0     0 ?        SN    7月14   1:49 [khugepaged]
 root        41  0.0  0.0      0     0 ?        S<    7月14   0:00 [crypto]
@@ -51,8 +51,8 @@ root       277  0.0  0.0      0     0 ?        S<    7月14   0:00 [xfs-cil/vda4
 root       278  0.0  0.0      0     0 ?        S<    7月14   0:00 [xfs-reclaim/vda]
 root       279  0.0  0.0      0     0 ?        S<    7月14   0:00 [xfs-log/vda4]
 root       280  0.0  0.0      0     0 ?        S<    7月14   0:00 [xfs-eofblocks/v]
-root       281  0.0  0.0      0     0 ?        S     7月14  20:58 [xfsaild/vda4]
-root       357  0.0  0.3  37236  3912 ?        Ss    7月14   3:12 /usr/lib/systemd/systemd-journald
+root       281  0.0  0.0      0     0 ?        S     7月14  20:59 [xfsaild/vda4]
+root       357  0.0  0.4  37236  4152 ?        Ss    7月14   3:12 /usr/lib/systemd/systemd-journald
 root       428  0.0  0.0      0     0 ?        S<    7月14   0:00 [xfs-buf/vda2]
 root       431  0.0  0.0      0     0 ?        S<    7月14   0:00 [xfs-data/vda2]
 root       433  0.0  0.0      0     0 ?        S<    7月14   0:00 [xfs-conv/vda2]
@@ -62,66 +62,69 @@ root       436  0.0  0.0      0     0 ?        S<    7月14   0:00 [xfs-log/vda2
 root       437  0.0  0.0      0     0 ?        S<    7月14   0:00 [xfs-eofblocks/v]
 root       438  0.0  0.0      0     0 ?        S     7月14   0:00 [xfsaild/vda2]
 root       473  0.0  0.0      0     0 ?        S<    7月14   0:00 [kvm-irqfd-clean]
-root       499  0.0  0.0  24432   900 ?        Ss    7月14   0:00 /usr/sbin/smartd -n -q never
-root       500  0.0  0.0  21656   872 ?        Ss    7月14  16:25 /usr/sbin/irqbalance --foreground
-dbus       501  0.0  0.1  60408  1984 ?        Ss    7月14   3:28 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
-libstor+   506  0.0  0.0   8576   556 ?        Ss    7月14   1:36 /usr/bin/lsmd -d
-root       510  0.0  0.1  26376  1444 ?        Ss    7月14   2:32 /usr/lib/systemd/systemd-logind
+root       499  0.0  0.0  24432   860 ?        Ss    7月14   0:00 /usr/sbin/smartd -n -q never
+root       500  0.0  0.0  21656   876 ?        Ss    7月14  16:26 /usr/sbin/irqbalance --foreground
+dbus       501  0.0  0.1  60408  2012 ?        Ss    7月14   3:28 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+libstor+   506  0.0  0.0   8576   512 ?        Ss    7月14   1:36 /usr/bin/lsmd -d
+root       510  0.0  0.1  26376  1448 ?        Ss    7月14   2:32 /usr/lib/systemd/systemd-logind
 chrony     532  0.0  1.3 120348 14084 ?        SL    7月14   0:10 /usr/sbin/chronyd
-root       542  0.0  0.2 476980  2552 ?        Ssl   7月14   8:18 /usr/sbin/NetworkManager --no-daemon
-root       879  0.0  0.1 152708  1920 ?        Ssl   7月14 102:19 /usr/bin/monit -I
+root       542  0.0  0.2 476980  2536 ?        Ssl   7月14   8:19 /usr/sbin/NetworkManager --no-daemon
+root       879  0.0  0.1 152708  1952 ?        Ssl   7月14 102:24 /usr/bin/monit -I
 root       890  0.0  0.0  25040   264 ?        Ss    7月14   0:00 /usr/sbin/xinetd -stayalive -pidfile /var/run/xinetd.pid
-root       893  0.0  0.1 112812  1176 ?        Ss    7月14   0:24 /usr/sbin/sshd -D
+root       893  0.0  0.1 112812  1244 ?        Ss    7月14   0:24 /usr/sbin/sshd -D
 root       920  0.0  0.0 110088   692 tty1     Ss+   7月14   0:00 /sbin/agetty --noclear tty1 linux
 root       922  0.0  0.0 110088   672 ttyS0    Ss+   7月14   0:00 /sbin/agetty --keep-baud 115200 38400 9600 ttyS0 vt220
-httpd     4881  0.0  4.2 609080 43148 ?        S    12月14   0:10 php-fpm: pool www
-httpd     7863  0.0  3.8 608088 39060 ?        S    12月15   0:06 php-fpm: pool www
-httpd     8399  0.0  3.7 612076 38192 ?        S    12月15   0:05 php-fpm: pool www
-httpd     8576  0.0  3.7 608192 38348 ?        S    12月15   0:05 php-fpm: pool www
-httpd     8641  0.0  3.8 607944 38712 ?        S    12月15   0:11 php-fpm: pool www
-root     12477  0.0  0.0      0     0 ?        S    18:10   0:00 [kworker/1:2]
+httpd     4881  0.0  5.2 611128 52868 ?        S    12月14   0:11 php-fpm: pool www
+httpd     7863  0.0  5.4 610624 55812 ?        S    12月15   0:08 php-fpm: pool www
+httpd     8399  0.0  5.9 618692 60116 ?        S    12月15   0:07 php-fpm: pool www
+httpd     8576  0.0  5.4 612352 55420 ?        S    12月15   0:06 php-fpm: pool www
+httpd     8641  0.0  5.2 610684 53236 ?        S    12月15   0:12 php-fpm: pool www
 root     13115  0.0  0.0      0     0 ?        S    18:17   0:00 [kworker/u4:1]
-root     13149  0.0  0.0      0     0 ?        S    18:18   0:00 [kworker/0:1]
-root     13271  0.0  0.0      0     0 ?        S    18:20   0:00 [kworker/1:1]
-root     13288  0.0  0.0      0     0 ?        S    18:20   0:00 [kworker/0:3]
-root     13604  0.0  0.0      0     0 ?        S    18:25   0:00 [kworker/0:0]
-root     13682  0.0  0.0      0     0 ?        Zs   18:26   0:00 [systemctl] <defunct>
-256hax   13710  0.0  0.1 113176  1364 pts/0    S+   18:27   0:00 /usr/bin/bash ./export-server_info.sh
-256hax   13713  0.0  0.1 157444  1932 pts/0    R+   18:27   0:00 ps -aux
-root     15737  0.0  0.1 156704  1332 ?        Ss   16:12   0:00 sshd: 256hax [priv]
-256hax   15739  0.0  0.1 158332  1784 ?        S    16:12   0:02 sshd: 256hax@pts/0
-256hax   15740  0.0  0.2 116904  2784 pts/0    Ss   16:12   0:00 -bash
 root     16124  0.0  0.0      0     0 ?        S    16:38   0:01 [kworker/u4:2]
-root     22249  0.0  0.1 511456  1908 ?        Ss   12月01   1:40 php-fpm: master process (/etc/php7-fpm.conf)
+root     20581  0.0  0.0      0     0 ?        S    20:34   0:00 [kworker/0:0]
+root     20609  0.0  0.5 156648  5600 ?        Ss   20:35   0:00 sshd: 256hax [priv]
+256hax   20611  0.0  0.2 156964  2624 ?        S    20:35   0:00 sshd: 256hax@notty
+256hax   20612  0.0  0.2  72092  2888 ?        Ss   20:35   0:00 /usr/libexec/openssh/sftp-server
+postfix  20803  0.0  0.4  92388  4140 ?        S    20:38   0:00 pickup -l -t unix -u
+root     21194  0.0  0.5 156648  5632 ?        Ss   20:44   0:00 sshd: 256hax [priv]
+256hax   21197  0.0  0.2 156648  2412 ?        S    20:44   0:00 sshd: 256hax@pts/0
+256hax   21198  0.0  0.3 116648  3320 pts/0    Ss   20:44   0:00 -bash
+root     21319  0.0  0.0      0     0 ?        S    20:45   0:00 [kworker/0:2]
+root     21617  0.0  0.0      0     0 ?        S    20:50   0:03 [kworker/0:1]
+root     22249  0.0  0.1 511456  1900 ?        Ss   12月01   1:41 php-fpm: master process (/etc/php7-fpm.conf)
+root     23793  0.0  0.0      0     0 ?        S    21:30   0:00 [kworker/1:2]
+root     24394  0.0  0.0      0     0 ?        S    21:40   0:00 [kworker/1:0]
 root     24542  0.0  0.0 120148   328 ?        Ss   12月02   0:00 nginx: master process /usr/sbin/nginx
-httpd    24543  0.0  0.7 129432  7328 ?        S    12月02   1:18 nginx: worker process
-httpd    24544  0.0  0.8 131008  8532 ?        S    12月02   0:50 nginx: worker process
-httpd    24545  0.0  0.0 122236   608 ?        S    12月02   0:21 nginx: cache manager process
-httpd    25140  0.0  3.9 613352 40104 ?        S    12月12   0:30 php-fpm: pool www
-httpd    25149  0.0  4.5 610820 45736 ?        S    12月12   0:31 php-fpm: pool www
-httpd    25250  0.0  4.1 609624 42400 ?        S    12月12   0:24 php-fpm: pool www
-httpd    25265  0.0  4.5 615844 45960 ?        S    12月12   0:31 php-fpm: pool www
-httpd    25295  0.0  3.8 1082644 39576 ?       Sl   12月12   0:36 php-fpm: pool www
-httpd    25318  0.0  4.7 612364 48068 ?        S    12月12   0:26 php-fpm: pool www
-httpd    25336  0.0  4.3 613740 43784 ?        S    12月12   0:40 php-fpm: pool www
-httpd    25365  0.0  4.2 1073760 42888 ?       Sl   12月12   0:26 php-fpm: pool www
-httpd    26987  0.0  4.0 617196 40724 ?        S    12月13   0:22 php-fpm: pool www
-root     28429  0.0  0.0  44600   756 ?        Ss   16:41   0:00 /usr/lib/systemd/systemd-udevd
-httpd    29030  0.0  4.0 618364 41516 ?        S    12月13   0:22 php-fpm: pool www
+httpd    24543  0.0  0.7 129432  7820 ?        S    12月02   1:19 nginx: worker process
+httpd    24544  0.0  0.9 131740  9632 ?        S    12月02   0:51 nginx: worker process
+httpd    24545  0.0  0.0 122236   736 ?        S    12月02   0:21 nginx: cache manager process
+root     24810  0.0  0.0      0     0 ?        Zs   21:46   0:00 [systemctl] <defunct>
+256hax   24819  0.0  0.1 113176  1368 pts/0    S+   21:46   0:00 /usr/bin/bash ./export-server_info.sh
+256hax   24822  0.0  0.1 157444  1928 pts/0    R+   21:46   0:00 ps -aux
+httpd    25140  0.0  6.3 617512 64948 ?        S    12月12   0:31 php-fpm: pool www
+httpd    25149  0.0  5.5 612868 55960 ?        S    12月12   0:32 php-fpm: pool www
+httpd    25250  0.0  5.6 613852 57172 ?        S    12月12   0:25 php-fpm: pool www
+httpd    25265  0.0  6.3 624036 64048 ?        S    12月12   0:32 php-fpm: pool www
+httpd    25295  0.0  6.9 1088788 70416 ?       Sl   12月12   0:37 php-fpm: pool www
+httpd    25318  0.0  5.6 613008 57688 ?        S    12月12   0:27 php-fpm: pool www
+httpd    25336  0.0  5.2 613740 53492 ?        S    12月12   0:41 php-fpm: pool www
+httpd    25365  0.0  5.6 1073760 57468 ?       Sl   12月12   0:28 php-fpm: pool www
+httpd    26987  0.0  5.7 621292 58352 ?        S    12月13   0:23 php-fpm: pool www
+root     28429  0.0  0.0  44600   700 ?        Ss   16:41   0:00 /usr/lib/systemd/systemd-udevd
+httpd    29030  0.0  5.8 622460 59408 ?        S    12月13   0:23 php-fpm: pool www
 root     29801  0.0  0.0  42896   272 ?        Ss   17:19   0:00 /usr/sbin/lvmetad -f
-root     29941  0.0  0.1  92284  1268 ?        Ss   17:19   0:00 /usr/libexec/postfix/master -w
-postfix  29942  0.0  0.1  92388  1324 ?        S    17:19   0:00 pickup -l -t unix -u
-postfix  29943  0.0  0.1  92564  1320 ?        S    17:19   0:00 qmgr -l -t unix -u
-root     29969  0.0  0.2 265340  2660 ?        Ssl  17:19   0:00 /usr/sbin/rsyslogd -n
-mysql    30268  0.1 11.9 1300320 121676 ?      Ssl  17:19   0:05 /usr/sbin/mysqld
-root     30365  0.0  0.0  62044   636 ?        S<sl 17:19   0:00 /sbin/auditd
-root     30449  0.0  0.0 126288   952 ?        Ss   17:19   0:00 /usr/sbin/crond -n
-root     30522  0.0  2.6 362448 26892 ?        Ssl  17:19   0:01 /usr/bin/python -Es /usr/sbin/firewalld --nofork --nopid
-root     30575  0.0  0.9 452232  9952 ?        Sl   17:19   0:01 /usr/bin/python2 -s /usr/bin/fail2ban-server -s /var/run/fail2ban/fail2ban.sock -p /var/run/fail2ban/fail2ban.pid -x -b
-root     30823  0.0  0.0  53176   580 ?        Ss   17:19   0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
-root     31141  0.0  0.0  25904   220 ?        Ss   17:19   0:00 /usr/sbin/atd -f
-polkitd  31225  0.0  0.4 614312  4100 ?        Ssl  17:19   0:00 /usr/lib/polkit-1/polkitd --no-debug
-root     31272  0.0  1.1 573820 11328 ?        Ssl  17:19   0:00 /usr/bin/python2 -Es /usr/sbin/tuned -l -P
-root     31332  0.0  0.1  90392  1040 ?        Ss   17:19   0:02 /sbin/rngd -f
-root     31476  0.0  0.1 228112  1776 ?        Ss   17:19   0:00 /usr/sbin/abrtd -d -s
-root     31495  0.0  0.1 225804  1676 ?        Ss   17:19   0:00 /usr/bin/abrt-watch-log -F BUG: WARNING: at WARNING: CPU: INFO: possible recursive locking detected ernel BUG at list_del corruption list_add corruption do_IRQ: stack overflow: ear stack overflow (cur: eneral protection fault nable to handle kernel ouble fault: RTNL: assertion failed eek! page_mapcount(page) went negative! adness at NETDEV WATCHDOG ysctl table check failed : nobody cared IRQ handler type mismatch Kernel panic - not syncing: Machine Check Exception: Machine check events logged divide error: bounds: coprocessor segment overrun: invalid TSS: segment not present: invalid opcode: alignment check: stack segment: fpu exception: simd exception: iret exception: /var/log/messages -- /usr/bin/abrt-dump-oops -xtD
+root     29941  0.0  0.1  92284  1192 ?        Ss   17:19   0:00 /usr/libexec/postfix/master -w
+postfix  29943  0.0  0.1  92564  1328 ?        S    17:19   0:00 qmgr -l -t unix -u
+root     29969  0.0  0.2 265340  2880 ?        Ssl  17:19   0:01 /usr/sbin/rsyslogd -n
+mysql    30268  0.1 14.0 1300840 142444 ?      Ssl  17:19   0:20 /usr/sbin/mysqld
+root     30365  0.0  0.0  62044   688 ?        S<sl 17:19   0:00 /sbin/auditd
+root     30449  0.0  0.1 126320  1120 ?        Ss   17:19   0:00 /usr/sbin/crond -n
+root     30522  0.0  2.6 362448 26760 ?        Ssl  17:19   0:01 /usr/bin/python -Es /usr/sbin/firewalld --nofork --nopid
+root     30575  0.0  0.9 452232 10148 ?        Sl   17:19   0:06 /usr/bin/python2 -s /usr/bin/fail2ban-server -s /var/run/fail2ban/fail2ban.sock -p /var/run/fail2ban/fail2ban.pid -x -b
+root     30823  0.0  0.0  53176   668 ?        Ss   17:19   0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+root     31141  0.0  0.0  25904   204 ?        Ss   17:19   0:00 /usr/sbin/atd -f
+polkitd  31225  0.0  0.3 614312  3952 ?        Ssl  17:19   0:00 /usr/lib/polkit-1/polkitd --no-debug
+root     31272  0.0  1.0 573820 11148 ?        Ssl  17:19   0:02 /usr/bin/python2 -Es /usr/sbin/tuned -l -P
+root     31332  0.0  0.0  90392   984 ?        Ss   17:19   0:02 /sbin/rngd -f
+root     31476  0.0  0.1 228112  1740 ?        Ss   17:19   0:00 /usr/sbin/abrtd -d -s
+root     31495  0.0  0.1 225804  1644 ?        Ss   17:19   0:00 /usr/bin/abrt-watch-log -F BUG: WARNING: at WARNING: CPU: INFO: possible recursive locking detected ernel BUG at list_del corruption list_add corruption do_IRQ: stack overflow: ear stack overflow (cur: eneral protection fault nable to handle kernel ouble fault: RTNL: assertion failed eek! page_mapcount(page) went negative! adness at NETDEV WATCHDOG ysctl table check failed : nobody cared IRQ handler type mismatch Kernel panic - not syncing: Machine Check Exception: Machine check events logged divide error: bounds: coprocessor segment overrun: invalid TSS: segment not present: invalid opcode: alignment check: stack segment: fpu exception: simd exception: iret exception: /var/log/messages -- /usr/bin/abrt-dump-oops -xtD
