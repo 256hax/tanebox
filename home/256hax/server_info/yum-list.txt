@@ -1,9 +1,9 @@
 読み込んだプラグイン:fastestmirror, langpacks
 Loading mirror speeds from cached hostfile
- * base: ftp.iij.ad.jp
+ * base: ftp-srv2.kddilabs.jp
  * epel: ftp.iij.ad.jp
- * extras: ftp.iij.ad.jp
- * updates: ftp.iij.ad.jp
+ * extras: ftp-srv2.kddilabs.jp
+ * updates: ftp-srv2.kddilabs.jp
 インストール済みパッケージ
 GeoIP.x86_64                               1.5.0-13.el7           @base         
 ImageMagick.x86_64                         6.7.8.9-15.el7_2       @updates      

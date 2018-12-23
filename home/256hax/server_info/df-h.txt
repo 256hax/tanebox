@@ -5,4 +5,5 @@ tmpfs            496M     0  496M    0% /dev/shm
 tmpfs            496M   51M  446M   11% /run
 tmpfs            496M     0  496M    0% /sys/fs/cgroup
 /dev/vda2        497M  215M  282M   44% /boot
+tmpfs            100M     0  100M    0% /run/user/1001
 tmpfs            100M     0  100M    0% /run/user/1002
