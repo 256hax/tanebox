@@ -1,5 +1,6 @@
 {
   "id": "99c95d39-3d13-4230-95cd-3ce641cc4c3d",
+  "version": "1.1",
   "name": "tanebox.com",
   "url": "",
   "tests": [{
@@ -19,10 +20,10 @@
       "target": "css=h2.entry-title",
       "targets": [
         ["css=h2.entry-title", "css"],
-        ["//article[@id='post-213']/div/div/header/h2", "xpath:idRelative"],
-        ["//h2", "xpath:position"]
+        ["xpath=//article[@id='post-213']/div/div/header/h2", "xpath:idRelative"],
+        ["xpath=//h2", "xpath:position"]
       ],
-      "value": "INDEX"
+      "value": "TOP"
     }, {
       "id": "a161a1ef-d43f-4cd5-825b-59fe53cfab7f",
       "comment": "",
@@ -37,8 +38,8 @@
       "target": "css=h1.entry-title",
       "targets": [
         ["css=h1.entry-title", "css"],
-        ["//article[@id='post-323']/header/h1", "xpath:idRelative"],
-        ["//h1", "xpath:position"]
+        ["xpath=//article[@id='post-323']/header/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"]
       ],
       "value": "キーボードのカラーリングシミュレーター"
     }, {
@@ -55,8 +56,8 @@
       "target": "css=h1.entry-title",
       "targets": [
         ["css=h1.entry-title", "css"],
-        ["//article[@id='post-517']/header/h1", "xpath:idRelative"],
-        ["//h1", "xpath:position"]
+        ["xpath=//article[@id='post-517']/header/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"]
       ],
       "value": "MassdropでALTキーボード購入"
     }, {
@@ -73,19 +74,19 @@
       "target": "css=h1.entry-title",
       "targets": [
         ["css=h1.entry-title", "css"],
-        ["//article[@id='post-581']/header/h1", "xpath:idRelative"],
-        ["//h1", "xpath:position"]
+        ["xpath=//article[@id='post-581']/header/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"]
       ],
       "value": "40%メカニカルキーボード VORTEX CORE"
     }, {
       "id": "b9db5d34-cd95-43aa-9c22-c489cbd38ed3",
       "comment": "",
       "command": "verifyText",
-      "target": "css=h2 > p",
+      "target": "css=h2",
       "targets": [
         ["css=h2 > p", "css"],
-        ["//article[@id='post-581']/div/div/h2/p", "xpath:idRelative"],
-        ["//h2/p", "xpath:position"]
+        ["xpath=//article[@id='post-581']/div/div/h2/p", "xpath:idRelative"],
+        ["xpath=//h2/p", "xpath:position"]
       ],
       "value": "小さくても高機能"
     }, {
@@ -103,10 +104,10 @@
       "targets": [
         ["linkText=車もシューズもキーキャップ", "linkText"],
         ["css=h2.entry-title > a", "css"],
-        ["//a[contains(text(),'車もシューズもキーキャップ')]", "xpath:link"],
-        ["//article[@id='post-695']/header/h2/a", "xpath:idRelative"],
-        ["//a[contains(@href, 'https://keyboards.tanebox.com/a/photos/695')]", "xpath:href"],
-        ["//h2/a", "xpath:position"]
+        ["xpath=//a[contains(text(),'車もシューズもキーキャップ')]", "xpath:link"],
+        ["xpath=//article[@id='post-695']/header/h2/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://keyboards.tanebox.com/a/photos/695')]", "xpath:href"],
+        ["xpath=//h2/a", "xpath:position"]
       ],
       "value": "車もシューズもキーキャップ"
     }, {
@@ -123,15 +124,15 @@
       "target": "css=h1.entry-title",
       "targets": [
         ["css=h1.entry-title", "css"],
-        ["//article[@id='post-609']/header/h1", "xpath:idRelative"],
-        ["//h1", "xpath:position"]
+        ["xpath=//article[@id='post-609']/header/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"]
       ],
       "value": "Massdropで日本からキーボード関連を購入する方法"
     }, {
       "id": "f14facb1-1568-4a59-a294-0509f9a4b138",
       "comment": "",
       "command": "open",
-      "target": "https://keyboards.tanebox.com/glossary/doubleshot?celenium-test",
+      "target": "https://keyboards.tanebox.com/glossary/dye-sublimation?celenium-test",
       "targets": [],
       "value": ""
     }, {
@@ -141,10 +142,10 @@
       "target": "css=h1.entry-title",
       "targets": [
         ["css=h1.entry-title", "css"],
-        ["//article[@id='post-549']/header/h1", "xpath:idRelative"],
-        ["//h1", "xpath:position"]
+        ["xpath=//article[@id='post-549']/header/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"]
       ],
-      "value": "Doubleshot"
+      "value": "Dye Sublimation"
     }]
   }, {
     "id": "1baca986-7f0d-4016-8a7a-946921a58a71",
@@ -164,10 +165,10 @@
       "targets": [
         ["linkText=myMemoBlog by 256hax", "linkText"],
         ["css=h1.site-title > a", "css"],
-        ["//a[contains(text(),'myMemoBlog by 256hax')]", "xpath:link"],
-        ["//header[@id='masthead']/div/h1/a", "xpath:idRelative"],
+        ["xpath=//a[contains(text(),'myMemoBlog by 256hax')]", "xpath:link"],
+        ["xpath=//header[@id='masthead']/div/h1/a", "xpath:idRelative"],
         ["xpath=(//a[contains(@href, 'https://blog.tanebox.com/')])[2]", "xpath:href"],
-        ["//h1/a", "xpath:position"]
+        ["xpath=//h1/a", "xpath:position"]
       ],
       "value": "myMemoBlog by 256hax"
     }, {
@@ -184,8 +185,8 @@
       "target": "css=h1.entry-title",
       "targets": [
         ["css=h1.entry-title", "css"],
-        ["//article[@id='post-17']/header/h1", "xpath:idRelative"],
-        ["//h1", "xpath:position"]
+        ["xpath=//article[@id='post-17']/header/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"]
       ],
       "value": "BracketsでGetting Startedを消す方法（別フォルダ開くと消える）"
     }]
@@ -199,6 +200,5 @@
     "tests": ["e66c2345-7f25-4cb1-a171-6818c4a3e1a5"]
   }],
   "urls": [],
-  "plugins": [],
-  "version": "1.0"
+  "plugins": []
 }
