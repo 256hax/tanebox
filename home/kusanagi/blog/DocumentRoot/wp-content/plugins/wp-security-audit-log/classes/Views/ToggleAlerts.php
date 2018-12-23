@@ -130,6 +130,9 @@ class WSAL_Views_ToggleAlerts extends WSAL_AbstractView {
 
 			// Set the option.
 			$this->_plugin->SetGlobalOption( 'scan-file-changes', $file_change_toggle );
+
+			// Set the visitor events option.
+			$this->_plugin->SetGlobalOption( 'disable-visitor-events', isset( $post_array['disable-visitor-events'] ) ? 'no' : 'yes' );
 		}
 
 		// Log level form submission.
@@ -153,7 +156,8 @@ class WSAL_Views_ToggleAlerts extends WSAL_AbstractView {
 		$is_custom       = ! empty( $events_diff ) ? true : false; // If difference is not empty then mode is custom.
 		$log_details     = $this->_plugin->GetGlobalOption( 'details-level', false ); // Get log level option.
 
-		$subcat_alerts = array( 1004, 2010, 6007, 2111, 2119, 2016, 2053, 7000, 8009, 8014, 9007, 9027, 9002, 8809, 8813, 6000, 6001, 6019 );
+		$subcat_alerts = array( 1004, 2010, 6007, 2111, 2119, 2016, 2053, 7000, 8009, 8014, 9007, 9027, 9002, 8809, 8813, 6000, 6001, 6019, 6028 );
+		$public_events = $this->_plugin->alerts->get_public_events(); // Get public events.
 		?>
 		<p>
 			<form method="post" id="wsal-alerts-level">
@@ -182,12 +186,19 @@ class WSAL_Views_ToggleAlerts extends WSAL_AbstractView {
 			</form>
 		</p>
 		<h2 id="wsal-tabs" class="nav-tab-wrapper">
-			<?php foreach ( $safe_names as $name => $safe ) : ?>
+			<?php
+			foreach ( $safe_names as $name => $safe ) :
+				if ( __( 'Third Party Plugins', 'wp-security-audit-log' ) === $name ) :
+					?>
+					<a href="#tab-visitor-events" class="nav-tab">
+						<?php esc_html_e( 'Visitor Events', 'wp-security-audit-log' ); ?>
+					</a>
+				<?php endif; ?>
 				<a href="#tab-<?php echo esc_attr( $safe ); ?>" class="nav-tab"><?php echo esc_html( $name ); ?></a>
 			<?php endforeach; ?>
 		</h2>
 		<form id="audit-log-viewer" method="post">
-			<input type="hidden" name="page" value="<?php echo filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING ); ?>" />
+			<input type="hidden" name="page" value="<?php echo isset( $_GET['page'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) : false; ?>" />
 			<?php wp_nonce_field( 'wsal-togglealerts' ); ?>
 
 			<div class="nav-tabs">
@@ -419,6 +430,8 @@ class WSAL_Views_ToggleAlerts extends WSAL_AbstractView {
 															esc_html_e( 'Settings', 'wp-security-audit-log' );
 														} elseif ( 6019 === $alert->type ) {
 															esc_html_e( 'Cron Jobs', 'wp-security-audit-log' );
+														} elseif ( 6028 === $alert->type ) {
+															esc_html_e( 'File Changes Scanning', 'wp-security-audit-log' );
 														}
 														?>
 													</h3>
@@ -435,7 +448,13 @@ class WSAL_Views_ToggleAlerts extends WSAL_AbstractView {
 													class="alert"
 													<?php checked( $active[ $alert->type ] ); ?>
 													value="<?php echo esc_attr( (int) $alert->type ); ?>"
-													<?php echo esc_attr( $disabled ); ?>
+													<?php
+													if ( ! empty( $disabled ) ) {
+														echo esc_attr( $disabled );
+													} elseif ( 'no' !== $this->_plugin->GetGlobalOption( 'disable-visitor-events', 'no' ) && in_array( $alert->type, $public_events, true ) ) {
+														echo 'disabled';
+													}
+													?>
 													<?php echo ( __( 'File Changes', 'wp-security-audit-log' ) === $subname ) ? 'onclick="wsal_toggle_file_changes(this)"' : false; ?>
 												/>
 											</th>
@@ -580,6 +599,34 @@ class WSAL_Views_ToggleAlerts extends WSAL_AbstractView {
 						?>
 					</div>
 				<?php endforeach; ?>
+				<div class="wsal-tab" id="tab-visitor-events">
+					<h4><?php esc_html_e( 'The plugin also keeps a log of some events that website visitors (non-logged in users) do because it is typically required by site admins. You can disable these events from here:', 'wp-security-audit-log' ); ?></h4>
+					<table class="form-table">
+						<th><label for="enable-visitor-events"><?php esc_html_e( 'Enable website visitors events', 'wp-security-audit-log' ); ?></label></th>
+						<td>
+							<fieldset>
+								<?php $disable_visitor_events = $this->_plugin->GetGlobalOption( 'disable-visitor-events', 'no' ); ?>
+								<label for="disable-visitor-events">
+									<input type="checkbox" id="disable-visitor-events" name="disable-visitor-events" <?php checked( $disable_visitor_events, 'no' ); ?> value="no" />
+									<?php esc_html_e( 'Enable', 'wp-security-audit-log' ); ?>
+								</label>
+							</fieldset>
+						</td>
+					</table>
+					<p class="description"><?php esc_html_e( 'Below is the list of the events which are disabled when the above option is disabled:', 'wp-security-audit-log' ); ?></p>
+					<ul>
+						<?php
+						$wsal_alerts = $this->_plugin->alerts->GetAlerts(); // Get alerts list.
+						foreach ( $public_events as $public_event ) :
+							if ( isset( $wsal_alerts[ $public_event ] ) ) :
+								?>
+								<li><?php echo esc_html( $wsal_alerts[ $public_event ]->type . ' — ' . $wsal_alerts[ $public_event ]->desc ); ?></li>
+								<?php
+							endif;
+						endforeach;
+						?>
+					</ul>
+				</div>
 			</div>
 			<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php echo esc_attr( __( 'Save Changes', 'wp-security-audit-log' ) ); ?>"></p>
 		</form>
