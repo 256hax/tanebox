@@ -77,6 +77,11 @@ You can use glossaryLink. You can also define glossaryLinkMain if you wish to ha
 
 == Changelog ==
 
+= 3.8.9 =
+* Feature: Added the support for tooltips in the WooCommerce Attributes section
+* Feature: Fixed support for AntiSpambot
+* Bug: Fixed the issue with audio/video players playing after tooltip being closed
+
 = 3.8.8 =
 * Bug: Security update
 

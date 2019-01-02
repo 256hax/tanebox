@@ -150,6 +150,7 @@ class CMTT_Pro {
              * Tooltips in Woocommerce short description
              */
             add_filter('woocommerce_short_description', array(self::$calledClassName, 'cmtt_glossary_parse'), 20000);
+            add_filter('woocommerce_attribute', array(self::$calledClassName, 'cmtt_glossary_parse'), 20000);
 
             /*
              * Tooltips in WordPress Text Widget
@@ -207,11 +208,39 @@ class CMTT_Pro {
             add_filter('cmtt_glossary_content_before', array(__CLASS__, 'formatAdditionalContent'), 1000);
             add_filter('cmtt_glossary_content_after', array(__CLASS__, 'formatAdditionalContent'), 1000);
 
+            add_filter('the_content', array(__CLASS__, 'onBeforeShortcodes'), 9);
+            add_filter('cmtt_runParser', array(__CLASS__, 'onBeforeParsing'), PHP_INT_MAX);
+            add_filter('cmtt_parsed_content', array(__CLASS__, 'onAfterParsing'));
+
             /*
              * Init the Glossary Index (adds hooks)
              */
             CMTT_Glossary_Index::init();
         }
+    }
+
+    public static function onBeforeShortcodes($content) {
+        if (function_exists('wpcodex_hide_email_shortcode')) {
+            remove_shortcode('email');
+        }
+        return $content;
+    }
+
+    public static function onBeforeParsing($runParser) {
+        if ($runParser) {
+        } else {
+            
+        }
+        return $runParser;
+    }
+
+    public static function onAfterParsing($content) {
+        if (function_exists('wpcodex_hide_email_shortcode')) {
+            add_shortcode('email', 'wpcodex_hide_email_shortcode');
+            $content = do_shortcode($content);
+        }
+
+        return $content;
     }
 
     public static function maybeHashContent($glossaryItemContent, $glossary_item) {
@@ -2403,7 +2432,7 @@ class CMTT_Pro {
                 }
             } else {
                 //insert new
-                $update = wp_insert_post($data);
+                $update = wp_insert_post($data, true);
             }
 
             if ($update > 0 && isset($item[4]) && isset($item[5])) {
