@@ -8,12 +8,14 @@
 # * * * * * 実行されるコマンド
 
 # Init log file before run cron
-0 0 * * * echo empty > /var/log/cron-root/`date +"\%d"`.log
+0 0 * * * echo --- Init `date +"\%Y\%m\%d"`--- > /var/log/cron-root/`date +"\%d"`.log
 
 # Renew Let's Encrypt SSL cert
+30 03 * * 5 echo --- Let's Encrypt `date +"\%d"`--- >> /var/log/cron-root/`date +"\%d"`.log
 30 03 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/root-html -d tanebox.com --post-hook "systemctl restart nginx" >> /var/log/cron-root/`date +"\%d"`.log 2>&1
 40 03 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/blog/DocumentRoot -d blog.tanebox.com --post-hook "systemctl restart nginx" >> /var/log/cron-root/`date +"\%d"`.log 2>&1
 50 03 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/keyboards/DocumentRoot -d keyboards.tanebox.com --post-hook "systemctl restart nginx" >> /var/log/cron-root/`date +"\%d"`.log 2>&1
 
 # mysqldump for Backup
-0 04 * * 5 mysqldump --defaults-file=/root/.my.cnf --all-databases > /var/backup/mysql/mysqldump-all-databases_day`date +"\%d"`.sql >> /var/log/cron-root/`date +"\%d"`.log 2>&1
+0 04 * * 5 echo --- mysqldump `date +"\%Y\%m\%d"`--- >> /var/log/cron-root/`date +"\%d"`.log
+0 04 * * 5 /usr/bin/mysqldump --defaults-file=/root/.my.cnf --all-databases > /var/backup/mysql/mysqldump-all-databases_day`date +"\%d"`.sql
