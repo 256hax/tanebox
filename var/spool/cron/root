@@ -19,3 +19,6 @@
 # mysqldump for Backup
 0 04 * * 5 echo --- mysqldump `date +"\%Y\%m\%d"`--- >> /var/log/cron-root/`date +"\%d"`.log
 0 04 * * 5 /usr/bin/mysqldump --defaults-file=/root/.my.cnf --all-databases > /var/backup/mysql/mysqldump-all-databases_day`date +"\%d"`.sql
+
+## latest Backup for TeraCLOUD
+30 04 1 * * /usr/bin/mysqldump --defaults-file=/root/.my.cnf --all-databases > /var/backup/mysql/mysqldump-all-databases_latest.sql
