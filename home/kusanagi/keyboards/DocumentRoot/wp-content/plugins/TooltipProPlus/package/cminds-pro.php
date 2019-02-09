@@ -1,9 +1,9 @@
 <?php
 
-namespace com\cminds\package\pro\v1_8_5;
+namespace com\cminds\package\pro\v1_8_6;
 
 if ( !defined( __NAMESPACE__ . '\PLATFORM_VERSION' ) ) {
-    define( __NAMESPACE__ . '\PLATFORM_VERSION', '1_8_5' );
+    define( __NAMESPACE__ . '\PLATFORM_VERSION', '1_8_6' );
 }
 if ( !class_exists( __NAMESPACE__ . '\CmindsProPackage' ) ) {
 
@@ -48,10 +48,9 @@ if ( !class_exists( __NAMESPACE__ . '\CmindsProPackage' ) ) {
             if ( $this->getOption( 'plugin-is-pro' ) ) {
                 include_once "cminds-api.php";
                 $globalVariableName = $this->getOption( 'plugin-abbrev' ) . '_isLicenseOk';
-                global ${$globalVariableName};
 
                 $this->licensingApi    = new CmindsLicensingAPI( $this );
-                ${$globalVariableName} = $this->licensingApi->isLicenseOk();
+                $GLOBALS[$globalVariableName] = $this->licensingApi->isLicenseOk();
 
                 /*
                  * Not Add-On
@@ -1704,6 +1703,7 @@ if ( !class_exists( __NAMESPACE__ . '\CmindsProPackage' ) ) {
             $permalinksurl       = self_admin_url( 'options-permalink.php' );
 
             $content = '';
+            $namespace = explode('\\', __NAMESPACE__);
             ob_start();
             if ( !$plaintext ):
                 ?>
@@ -1711,6 +1711,11 @@ if ( !class_exists( __NAMESPACE__ . '\CmindsProPackage' ) ) {
                     The information in this table is useful to check if the plugin might have some incompabilities with you server.
                 </span>
                 <table class="form-table server-info-table">
+                    <tr>
+                        <td>Package Version</td>
+                        <td><?php echo str_replace(array('v', '_'), array('', '.'), end($namespace)); ?></td>
+                        <td><span>OK</span></td>
+                    </tr>
                     <tr>
                         <td>WordPress Version</td>
                         <td><?php echo $wp_version; ?></td>
@@ -1793,6 +1798,7 @@ if ( !class_exists( __NAMESPACE__ . '\CmindsProPackage' ) ) {
                 <?php
             else:
                 ?>
+            Package Version		<?php echo str_replace(array('v', '_'), array('', '.'), end($namespace)); ?>    OK
 
                 WordPress Version		<?php echo $wp_version; ?>
                 <?php if ( version_compare( $wp_version, '3.3.0', '<' ) ): ?>The minimum supported version of WordPress is 3.3<?php else: ?>OK<?php endif; ?>

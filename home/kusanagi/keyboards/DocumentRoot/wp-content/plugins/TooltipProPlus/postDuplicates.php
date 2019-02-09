@@ -42,7 +42,7 @@ class CMTT_Post_Duplicates {
         $duplicates = self::find_duplicates( $glossary_item->post_title, $glossary_item->ID );
 
         $tag = 'div';
-        if ( count( $duplicates ) > 0 ) {
+        if (is_array($duplicates) &&  count( $duplicates ) > 0 ) {
             $content .= '<div class="cmtt_alternative_meanings_wrapper">';
             $content .= '<' . $tag . ' class="cmtt_related_title cmtt_related_terms_title">' . __( get_option( 'cmtt_glossary_AlternativeMeaningLabel', 'Alternative Meanings:' ), 'cm-tooltip-glossary' ) . ' </' . $tag . '>';
             $content .= '<ul class="cmtt_related">';
@@ -101,7 +101,7 @@ class CMTT_Post_Duplicates {
 
         $duplicatesArr = array();
         foreach ( $duplicateIds as $postId ) {
-            $tooltipcontent  = get_the_excerpt( $postId );
+            $tooltipcontent  = @get_the_excerpt( $postId );
             $duplicate       = sprintf( '<a href="%s" target="_blank" class="cmtt_field_help" title="%s">%s</a>(<a href="%s" target="_blank">%s</a>)', get_permalink( $postId ), $tooltipcontent, $postId, get_edit_post_link( $postId ), 'edit' );
             $duplicatesArr[] = $duplicate;
         }

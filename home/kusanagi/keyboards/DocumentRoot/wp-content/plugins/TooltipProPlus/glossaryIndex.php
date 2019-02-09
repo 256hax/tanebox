@@ -31,6 +31,7 @@ class CMTT_Glossary_Index {
          * Glossary Index Tooltip Content
          */
         add_filter('cmtt_glossary_index_tooltip_content', array(__CLASS__, 'getTheTooltipContentBase'), 10, 2);
+        add_filter('cmtt_glossary_index_tooltip_content', array('CMTT_Pro', 'addCodeBeforeAfter'), 15, 2);
         add_filter('cmtt_glossary_index_tooltip_content', array('CMTT_Pro', 'cmtt_glossary_parse_strip_shortcodes'), 20, 2);
         add_filter('cmtt_glossary_index_tooltip_content', array('CMTT_Pro', 'cmtt_glossary_filterTooltipContent'), 30, 2);
 
@@ -321,7 +322,7 @@ class CMTT_Glossary_Index {
          * When this option is enabled we don't want titles to display tooltips
          */
         $disableNewValue = (bool) get_option('cmtt_glossaryOnlyTitleLinksToTerm', 0);
-        return $disableNewValue;
+        return $disable || $disableNewValue;
     }
 
     /**

@@ -273,7 +273,7 @@ class CMTT_Glossary_Plus {
                 break;
         }
 
-        $thumbnail = get_the_post_thumbnail($post->ID, 'full', array('class' => 'cmtt-tooltip-featured-image','style' => 'width: ' . $imageWidth . '; margin-top: 2%;' . $additionalStyle));
+        $thumbnail = get_the_post_thumbnail($post->ID, 'full', array('class' => 'cmtt-tooltip-featured-image', 'style' => 'width: ' . $imageWidth . '; margin-top: 2%;' . $additionalStyle));
 
         if (!empty($thumbnail) && !get_post_meta($post->ID, '_cmtt_disable_featured_image', true)) {
             $protocol = is_ssl() ? 'https://' : 'http://';
@@ -2040,20 +2040,17 @@ class CMTT_Glossary_Plus {
             return '';
         }
 
-        /* 	ML */
-        if (in_array($glossaryIndexStyle, array('modern-table', 'classic-definition', 'expand-style', 'expand2-style'))) {
+        if (in_array($glossaryIndexStyle, array('modern-table', 'classic-definition', 'expand-style', 'expand2-style', 'classic-excerpt'))) {
+            $descOrExcerpt = (int) get_option('cmtt_glossaryShowExcerpt', 0);
+
+            if ($descOrExcerpt || in_array($glossaryIndexStyle, array('classic-excerpt'))) {
+                $glossaryItemDesc = $glossary_item->post_excerpt;
+            } else {
             $glossaryItemDesc = $glossary_item->post_content;
+            }
             if (empty($glossaryItemDesc)) {
                 $glossaryItemDesc = '&nbsp;';
-            }
-        } else if (in_array($glossaryIndexStyle, array('classic-excerpt'))) {
-            $glossaryItemDesc = $glossary_item->post_excerpt;
         } else {
-            $glossaryItemDesc = '';
-        }
-
-        if (in_array($glossaryIndexStyle, array('modern-table', 'classic-definition'))) {
-            if (!empty($glossaryItemDesc)) {
                 $stripTags = (int) get_option('cmtt_glossaryTooltipDescStripTags', 1);
                 if ($stripTags) {
                     $glossaryItemDesc = strip_tags($glossaryItemDesc);
@@ -2072,6 +2069,8 @@ class CMTT_Glossary_Plus {
                     }
                 }
             }
+        } else {
+            $glossaryItemDesc = '';
         }
 
         return $glossaryItemDesc;

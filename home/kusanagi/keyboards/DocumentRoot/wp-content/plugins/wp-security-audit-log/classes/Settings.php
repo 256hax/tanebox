@@ -30,8 +30,14 @@ class WSAL_Settings {
 	const OPT_DEV_PHP_ERRORS     = 'p';
 	const OPT_DEV_REQUEST_LOG    = 'r';
 	const OPT_DEV_BACKTRACE_LOG  = 'b';
+	const ERROR_CODE_INVALID_IP  = 901;
 
-	const ERROR_CODE_INVALID_IP = 901;
+	/**
+	 * List of Site Admins.
+	 *
+	 * @var array
+	 */
+	private $site_admins = array();
 
 	/**
 	 * Dev Options.
@@ -293,6 +299,28 @@ class WSAL_Settings {
 	 */
 	public function set_admin_bar_notif( $newvalue ) {
 		$this->_plugin->SetGlobalOption( 'disable-admin-bar-notif', ! $newvalue );
+	}
+
+	/**
+	 * Check admin bar notification updates refresh option.
+	 *
+	 * @since 3.3.1
+	 *
+	 * @return string
+	 */
+	public function get_admin_bar_notif_updates() {
+		return $this->_plugin->GetGlobalOption( 'admin-bar-notif-updates', 'page-refresh' );
+	}
+
+	/**
+	 * Set admin bar notifications.
+	 *
+	 * @since 3.3.1
+	 *
+	 * @param string $newvalue - New option value.
+	 */
+	public function set_admin_bar_notif_updates( $newvalue ) {
+		$this->_plugin->SetGlobalOption( 'admin-bar-notif-updates', $newvalue );
 	}
 
 	/**
@@ -626,27 +654,32 @@ class WSAL_Settings {
 	 */
 	protected function GetAdmins() {
 		if ( $this->_plugin->IsMultisite() ) {
-			/**
-			 * Get list of admins.
-			 *
-			 * @see https://gist.github.com/1508426/65785a15b8638d43a9905effb59e4d97319ef8f8
-			 */
-			global $wpdb;
-			$cap = $wpdb->prefix . 'capabilities';
-			$sql = "SELECT DISTINCT $wpdb->users.user_login"
-				. " FROM $wpdb->users"
-				. " INNER JOIN $wpdb->usermeta ON ($wpdb->users.ID = $wpdb->usermeta.user_id )"
-				. " WHERE $wpdb->usermeta.meta_key = '$cap'"
-				. " AND CAST($wpdb->usermeta.meta_value AS CHAR) LIKE  '%\"administrator\"%'";
-			return $wpdb->get_col( $sql );
-		} else {
-			$result = array();
-			$query = 'role=administrator&fields[]=user_login';
-			foreach ( get_users( $query ) as $user ) {
-				$result[] = $user->user_login;
+			if ( empty( $this->site_admins ) ) {
+				/**
+				 * Get list of admins.
+				 *
+				 * @see https://gist.github.com/1508426/65785a15b8638d43a9905effb59e4d97319ef8f8
+				 */
+				global $wpdb;
+				$cap = $wpdb->prefix . 'capabilities';
+				$sql = "SELECT DISTINCT $wpdb->users.user_login"
+					. " FROM $wpdb->users"
+					. " INNER JOIN $wpdb->usermeta ON ($wpdb->users.ID = $wpdb->usermeta.user_id )"
+					. " WHERE $wpdb->usermeta.meta_key = '$cap'"
+					. " AND CAST($wpdb->usermeta.meta_value AS CHAR) LIKE  '%\"administrator\"%'";
+
+				// Get admins.
+				$this->site_admins = $wpdb->get_col( $sql );
 			}
-			return $result;
+		} else {
+			if ( empty( $this->site_admins ) ) {
+				$query = 'role=administrator&fields[]=user_login';
+				foreach ( get_users( $query ) as $user ) {
+					$this->site_admins[] = $user->user_login;
+				}
+			}
 		}
+		return $this->site_admins;
 	}
 
 	/**
@@ -1105,7 +1138,7 @@ class WSAL_Settings {
 	}
 
 	public function GetColumnsSelected() {
-		return $this->_plugin->GetGlobalOption( 'columns' );
+		return $this->_plugin->GetGlobalOption( 'columns', array() );
 	}
 
 	public function SetColumns( $columns ) {
@@ -1480,7 +1513,7 @@ class WSAL_Settings {
 	 * Method: Meta data formater.
 	 *
 	 * @param string  $name      - Name of the data.
-	 * @param mix     $value     - Value of the data.
+	 * @param mixed   $value     - Value of the data.
 	 * @param integer $occ_id    - Event occurrence ID.
 	 * @param mixed   $highlight - Highlight format.
 	 * @return string
@@ -1523,6 +1556,9 @@ class WSAL_Settings {
 
 			case '%EditorLinkPost%' == $name:
 				return ' View the <a target="_blank" href="' . esc_url( $value ) . '">post</a>';
+
+			case '%EditorLinkOrder%' == $name:
+				return '<a target="_blank" href="' . esc_url( $value ) . '">' . __( 'View Order', 'wp-security-audit-log' ) . '</a>';
 
 			case '%EditorLinkPage%' == $name:
 				return ' View the <a target="_blank" href="' . esc_url( $value ) . '">page</a>';
@@ -1577,10 +1613,10 @@ class WSAL_Settings {
 				return '<a href="javascript:;" onclick="download_failed_login_log( this )" data-download-nonce="' . esc_attr( wp_create_nonce( 'wsal-download-failed-logins' ) ) . '" title="' . esc_html__( 'Download the log file.', 'wp-security-audit-log' ) . '">' . esc_html__( 'Download the log file.', 'wp-security-audit-log' ) . '</a>';
 
 			case strncmp( $value, 'http://', 7 ) === 0:
-			case strncmp( $value, 'https://', 7 ) === 0:
+			case strncmp( $value, 'https://', 8 ) === 0:
 				return '<a href="' . esc_html( $value ) . '" title="' . esc_html( $value ) . '" target="_blank">' . esc_html( $value ) . '</a>';
 
-			case '%PostStatus%' === $name:
+			case in_array( $name, array( '%PostStatus%', '%ProductStatus%' ), true ):
 				if ( ! empty( $value ) && 'publish' === $value ) {
 					return $highlight_start_tag . esc_html__( 'published', 'wp-security-audit-log' ) . $highlight_end_tag;
 				} else {
@@ -1747,7 +1783,7 @@ class WSAL_Settings {
 	 * @since 3.3
 	 *
 	 * @param string  $name      - Name of the data.
-	 * @param mix     $value     - Value of the data.
+	 * @param mixed   $value     - Value of the data.
 	 * @param integer $occ_id    - Event occurrence ID.
 	 * @param mixed   $highlight - Highlight format.
 	 * @return string
@@ -1775,6 +1811,9 @@ class WSAL_Settings {
 
 			case '%EditorLinkPost%' === $name:
 				return ' View the <' . esc_url( $value ) . '|post>';
+
+			case '%EditorLinkOrder%' === $name:
+				return ' <' . esc_url( $value ) . '|View Order>';
 
 			case '%EditorLinkPage%' === $name:
 				return ' View the <' . esc_url( $value ) . '|page>';
@@ -1826,10 +1865,10 @@ class WSAL_Settings {
 				return '';
 
 			case strncmp( $value, 'http://', 7 ) === 0:
-			case strncmp( $value, 'https://', 7 ) === 0:
+			case strncmp( $value, 'https://', 8 ) === 0:
 				return '<' . esc_html( $value ) . '|' . esc_html( $value ) . '>';
 
-			case '%PostStatus%' === $name:
+			case in_array( $name, array( '%PostStatus%', '%ProductStatus%' ), true ):
 				if ( ! empty( $value ) && 'publish' === $value ) {
 					return '*' . esc_html__( 'published', 'wp-security-audit-log' ) . '*';
 				} else {
@@ -1877,5 +1916,45 @@ class WSAL_Settings {
 			default:
 				return '*' . esc_html( $value ) . '*';
 		}
+	}
+
+	/**
+	 * Checks Infinite Scroll.
+	 *
+	 * Returns true if infinite scroll is enabled.
+	 *
+	 * @since 3.3.1.1
+	 *
+	 * @return boolean
+	 */
+	public function is_infinite_scroll() {
+		return 'infinite-scroll' === $this->get_events_type_nav() ? true : false;
+	}
+
+	/**
+	 * Checks Events Navigation Type.
+	 *
+	 * Returns type of navigation for events log viewer.
+	 *
+	 * @since 3.3.1.1
+	 *
+	 * @return string
+	 */
+	public function get_events_type_nav() {
+		return $this->_plugin->GetGlobalOption( 'events-nav-type', 'infinite-scroll' );
+	}
+
+	/**
+	 * Sets Events Navigation Type.
+	 *
+	 * Sets type of navigation for events log viewer.
+	 *
+	 * @since 3.3.1.1
+	 *
+	 * @param string $nav_type - Navigation type.
+	 * @return string
+	 */
+	public function set_events_type_nav( $nav_type ) {
+		$this->_plugin->SetGlobalOption( 'events-nav-type', $nav_type );
 	}
 }

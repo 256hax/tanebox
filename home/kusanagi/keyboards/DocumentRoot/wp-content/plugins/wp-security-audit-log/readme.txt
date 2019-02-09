@@ -5,8 +5,8 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: wordpress security plugin, wordpress security audit log, audit log, activity logs, event log wordpress, wordpress user tracking, wordpress activity log, wordpress audit, security event log, audit trail, wordpress security monitor, wordpress admin, wordpress admin monitoring, user activity, admin, multisite, dashboard, notification, wordpress monitoring, email notification, wordpress email alerts, tracking, user tracking, user activity report, wordpress audit trail
 Requires at least: 3.6
-Tested up to: 5.0.2
-Stable tag: 3.3.0.2
+Tested up to: 5.0.3
+Stable tag: 3.3.1.1
 Requires PHP: 5.4.43
 
 An easy to use & comprehensive WordPress activity log plugin to log all changes on WordPress sites & multisite networks.
@@ -195,10 +195,17 @@ Please refer to our [Support & Documentation pages](https://www.wpsecurityauditl
 
 == Changelog ==
 
-= 3.3.0.2 (2019-01-07) =
+Release notes: [Infinite scroll for activity logs & performance enhancement](https://www.wpsecurityauditlog.com/releases/infinite-scroll-performance-improvements-update-3-3-1-1)
 
-* **Improvements**
-	* Better support for custom login pages.
-	
+= 3.3.1.1 (2019-02-06) =
+
+* **New Features**
+	* New [infinite scroll view in audit log viewer](https://www.wpsecurityauditlog.com/support-documentation/change-audit-log-viewer-pagination-infinite-scroll/) making the browsing of the activity logs much faster.
+
+* **Plugin Improvements**
+	* Improved the search filters - now they are much faster.
+	* Improved user session handling to better handle >1,000 sessions.
+	* Replaced PHP severity with event log severity in the list of Events.
+
 * **Bug Fixes**
-	* Fixed an issue where the visitor logs sensor remains disabled when [activity log level](https://www.wpsecurityauditlog.com/support-documentation/default-wordpress-activity-log-levels/) is switched to guru.
+	* Scan Now button for the [WordPress file integrity scanner](https://www.wpsecurityauditlog.com/support-documentation/wordpress-files-changes-warning-activity-logs/) is grayed out when auto scanning is disabled.

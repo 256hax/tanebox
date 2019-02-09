@@ -3,7 +3,7 @@
   Plugin Name: CM Tooltip Glossary Pro+
   Plugin URI: https://www.cminds.com/
   Description: PRO+ Version! Parses posts for defined glossary terms and adds links to the static glossary page containing the definition and a tooltip with the definition.
-  Version: 3.8.10
+  Version: 3.8.11
   Text Domain: cm-tooltip-glossary
   Author: CreativeMindsSolutions
   Author URI: https://www.cminds.com/
@@ -33,7 +33,7 @@ try {
  * @since 1.0
  */
 if ( !defined( 'CMTT_VERSION' ) ) {
-    define( 'CMTT_VERSION', '3.8.10' );
+    define( 'CMTT_VERSION', '3.8.11' );
 }
 
 /**

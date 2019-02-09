@@ -5,7 +5,7 @@ Donate link: https://www.cminds.com/
 Tags: glossary, pages, posts, definitions, tooltip, automatic, hints, hint, tip, tool-tip
 Requires at least: 3.3
 Tested up to: 5.0.2
-Stable tag: 3.8.10
+Stable tag: 3.8.11
 
 PRO+ Version! Parses posts for defined glossary terms and adds links to the static glossary page containing the definition and a tooltip with the definition.
 
@@ -76,6 +76,12 @@ You can use glossaryLink. You can also define glossaryLinkMain if you wish to ha
 5. Glossary setting page in Admin
 
 == Changelog ==
+
+= 3.8.11 =
+* Updated the Licensing Package
+* Feature: Added the setting allowing to display the excerpt instead of post content on Glossary Index page "Display excerpt instead of description?"
+* Change: Redesigned the Glossary Index Settings Page
+* Bug: Fixed the issue with the additional tooltip content not being added on Glossary Index page
 
 = 3.8.10 =
 * Small performance optimizations

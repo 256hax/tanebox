@@ -486,22 +486,6 @@ if ( !function_exists( 'cminds_cmtt_settings_tooltip_tab_content_after' ) ) {
                     <td colspan="2" class="cmtt_field_help_container">Set the color of the shadow of the tooltip</td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row">Tooltip display delay</th>
-                    <td>
-                        <input type="text" name="cmtt_tooltipDisplayDelay" value="<?php echo get_option( 'cmtt_tooltipDisplayDelay', 0 ); ?>"/>
-                    </td>
-
-                    <td colspan="2" class="cmtt_field_help_container">Set the delay (in miliseconds (1000ms = 1s)) before the tooltip appears</td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">Tooltip hide delay</th>
-                    <td>
-                        <input type="text" name="cmtt_tooltipHideDelay" value="<?php echo get_option( 'cmtt_tooltipHideDelay', 0 ); ?>"/>
-                    </td>
-
-                    <td colspan="2" class="cmtt_field_help_container">Set the delay (in miliseconds (1000ms = 1s)) before the tooltip fades out</td>
-                </tr>
-                <tr valign="top">
                     <th scope="row">Tooltip internal link color</th>
                     <td><input type="text" class="colorpicker" name="cmtt_tooltipInternalLinkColor" value="<?php echo get_option( 'cmtt_tooltipInternalLinkColor' ); ?>" /></td>
                     <td colspan="2" class="cmtt_field_help_container">Set the color of the links inside the tooltip.</td>
@@ -517,6 +501,58 @@ if ( !function_exists( 'cminds_cmtt_settings_tooltip_tab_content_after' ) ) {
                     <td colspan="2" class="cmtt_field_help_container">Set color of link to the term page in the tooltip. (Added only when the mobile support is enabled and on mobile device)</td>
                 </tr>
 
+            </table>
+        </div>
+        <div class="block">
+            <h3>Tooltip - Animation</h3>
+            <table class="floated-form-table form-table">
+                <!-- Tooltip Animation Time -->
+                <tr valign="top">
+                    <th scope="row">Tooltip animation appearance time</th>
+                    <td>
+                        <input type="text" style="width:50px" name="cmtt_tooltipDisplayDelay" value="<?php echo get_option( 'cmtt_tooltipDisplayDelay', '0.5' ); ?>"/>s
+                    </td>
+
+                    <td colspan="2" class="cmtt_field_help_container">Set the animation time for tooltip appearance</td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">Tooltip animation disappearance time</th>
+                    <td>
+                        <input type="text" style="width:50px" name="cmtt_tooltipHideDelay" value="<?php echo get_option( 'cmtt_tooltipHideDelay', '0.5' ); ?>"/>s
+                    </td>
+
+                    <td colspan="2" class="cmtt_field_help_container">Set the animation time for tooltip disappearance</td>
+                </tr>
+                <!-- Tooltip Display Animation -->
+                <tr valign="top" style="clear: left;">
+                    <th scope="row">Tooltip display animation</th>
+                    <td>
+                        <select name="cmtt_tooltipDisplayanimation" value="<?php echo get_option( 'cmtt_tooltipDisplayanimation', 'no_animation' ); ?>"/>
+                            <option value="no_animation">No animation</option>
+                            <option value="fade_in" <?php echo (get_option( 'cmtt_tooltipDisplayanimation', 0 )=='fade_in')?'selected':''; ?> >Fade in</option>
+                            <option value="grow" <?php echo (get_option( 'cmtt_tooltipDisplayanimation', 0 )=='grow')?'selected':''; ?> >Grow</option>
+                            <option value="horizontal_flip" <?php echo (get_option( 'cmtt_tooltipDisplayanimation', 0 )=='horizontal_flip')?'selected':''; ?> >Horizontal Flip</option>
+                            <option value="center_flip" <?php echo (get_option( 'cmtt_tooltipDisplayanimation', 0 )=='center_flip')?'selected':''; ?> >Center Flip</option>
+                        </select>
+                    </td>
+
+                    <td colspan="2" class="cmtt_field_help_container">Set an animation for when the tooltip appears</td>
+                </tr>
+                <!-- Tooltip hide animation -->
+                <tr valign="top">
+                    <th scope="row">Tooltip hide animation</th>
+                    <td>
+                        <select name="cmtt_tooltipHideanimation" value="<?php echo get_option( 'cmtt_tooltipHideanimation', 'no_animation' ); ?>"/>
+                            <option value="no_animation">No animation</option>
+                            <option value="fade_out" <?php echo (get_option( 'cmtt_tooltipHideanimation', 0 )=='fade_out')?'selected':''; ?> >Fade out</option>
+                            <option value="shrink" <?php echo (get_option( 'cmtt_tooltipHideanimation', 0 )=='shrink')?'selected':''; ?> >Shrink</option>
+                            <option value="horizontal_flip" <?php echo (get_option( 'cmtt_tooltipHideanimation', 0 )=='horizontal_flip')?'selected':''; ?> >Horizontal Flip</option>
+                            <option value="center_flip" <?php echo (get_option( 'cmtt_tooltipHideanimation', 0 )=='center_flip')?'selected':''; ?> >Center Flip</option>
+                        </select>
+                    </td>
+
+                    <td colspan="2" class="cmtt_field_help_container">Set an animation for when the tooltip disappears</td>
+                </tr>
             </table>
         </div>
         <?php

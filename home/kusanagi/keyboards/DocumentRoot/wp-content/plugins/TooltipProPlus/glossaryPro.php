@@ -1315,7 +1315,7 @@ class CMTT_Pro {
         /*
          *  Skip parsing for excluded pages and posts (except glossary pages?! - Marcin)
          */
-        $parsingDisabled = get_post_meta($post->ID, '_glossary_disable_for_page', true) == 1;
+        $parsingDisabled = CMTT_Pro::_get_meta('_glossary_disable_for_page', $post->ID) == 1;
         if ($parsingDisabled) {
             return FALSE;
         }
@@ -1373,7 +1373,7 @@ class CMTT_Pro {
              * The loops prepares the search query for the replacement
              */
             foreach ($glossary_index as $glossary_item) {
-                $dontParseTerm = (bool) get_post_meta($glossary_item->ID, '_cmtt_exclude_parsing', true);
+                $dontParseTerm = (bool) CMTT_Pro::_get_meta( '_cmtt_exclude_parsing', $glossary_item->ID);
                 if ($dontParseTerm) {
                     continue;
                 }
@@ -3323,7 +3323,7 @@ class CMTT_Pro {
                 wp_cache_set($indexIdsCacheKey, $glossaryIndexIds, '', 3600);
             }
         } else {
-            $glossaryIndexIds = $glossaryItems['query']->get_posts();
+            $glossaryIndexIds = $glossaryItems['query']->posts;
         }
 
         /*
