@@ -83,7 +83,7 @@ $table_prefix  = 'wp_';
  */
 define('WP_DEBUG', false);
 
-/* 編集が必要なのはここまでです ! WordPress でブログをお楽しみください。 */
+/* 編集が必要なのはここまでです ! WordPress でのパブリッシングをお楽しみください。 */
 
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )

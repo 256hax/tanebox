@@ -55,7 +55,7 @@ msgstr "Akismet プライバシー通知"
 msgid "Privacy"
 msgstr "プライバシー"
 
-#: class.akismet.php:1418
+#: class.akismet.php:1423
 msgid "This site uses Akismet to reduce spam. <a href=\"%s\" target=\"_blank\" rel=\"nofollow noopener\">Learn how your comment data is processed</a>."
 msgstr "このサイトはスパムを低減するために Akismet を使っています。<a href=\"%s\" target=\"_blank\" rel=\"nofollow noopener\">コメントデータの処理方法の詳細はこちらをご覧ください</a>。"
 
@@ -116,12 +116,11 @@ msgstr "手動構成"
 msgid "On this page, you are able to update your Akismet settings and view spam stats."
 msgstr "このページで、Akismet の設定を更新し、スパム統計情報を表示することができます。"
 
-#. Description of the plugin/theme
+#. Description of the plugin
 msgid "Used by millions, Akismet is quite possibly the best way in the world to <strong>protect your blog from spam</strong>. It keeps your site protected even while you sleep. To get started: activate the Akismet plugin and then go to your Akismet Settings page to set up your API key."
 msgstr "何百万もの利用実績がある Akismet は<strong>あなたのブログをスパムから保護する</strong>最良の方法といえるでしょう。あなたが眠りについている時間でさえ、Akismet は常時サイトを守り続けます。始めるのは簡単。Akismet プラグインを有効化したら設定ページで API キーを設定するだけです。"
 
-#. #-#-#-#-#  akismet-code.pot (Akismet Anti-Spam 4.1)  #-#-#-#-#
-#. Plugin Name of the plugin/theme
+#. Plugin Name of the plugin
 #: class.akismet-admin.php:114 class.akismet-admin.php:117
 msgid "Akismet Anti-Spam"
 msgstr "Akismet Anti-Spam (アンチスパム)"
@@ -405,8 +404,8 @@ msgstr "削除中…"
 msgid "Akismet"
 msgstr "Akismet"
 
-#: class.akismet-admin.php:107 class.akismet-admin.php:239
-#: class.akismet-admin.php:658 views/config.php:60
+#: views/config.php:60 class.akismet-admin.php:107 class.akismet-admin.php:239
+#: class.akismet-admin.php:658
 msgid "Settings"
 msgstr "設定"
 
@@ -469,7 +468,7 @@ msgstr "このページでは、スパムフィルターの統計を見ること
 msgid "Akismet Configuration"
 msgstr "Akismet 設定"
 
-#: class.akismet-admin.php:242 views/config.php:70
+#: views/config.php:70 class.akismet-admin.php:242
 msgid "API Key"
 msgstr "API キー"
 
@@ -477,7 +476,7 @@ msgstr "API キー"
 msgid "Enter/remove an API key."
 msgstr "API キーを入力または削除してください。"
 
-#: class.akismet-admin.php:243 views/config.php:105
+#: views/config.php:105 class.akismet-admin.php:243
 msgid "Comments"
 msgstr "コメント"
 
@@ -489,15 +488,15 @@ msgstr "コメントの投稿者の脇に承認したコメントの数を表示
 msgid "Choose to either discard the worst spam automatically or to always put all spam in spam folder."
 msgstr "最も悪質な種類のスパムを自動的に削除するか、すべてのスパムをスパムフォルダーに振り分けるか選択してください。"
 
-#: class.akismet-admin.php:244 views/config.php:128
+#: views/config.php:128 class.akismet-admin.php:244
 msgid "Strictness"
 msgstr "厳密度"
 
-#: class.akismet-admin.php:252 views/config.php:188
+#: views/config.php:188 class.akismet-admin.php:252
 msgid "Account"
 msgstr "アカウント"
 
-#: class.akismet-admin.php:255 views/config.php:196
+#: views/config.php:196 class.akismet-admin.php:255
 msgid "Subscription Type"
 msgstr "サブスクリプションタイプ"
 
@@ -505,7 +504,7 @@ msgstr "サブスクリプションタイプ"
 msgid "The subscription status - active, cancelled or suspended"
 msgstr "サブスクリプション状況 - 有効、キャンセル、一時停止"
 
-#: class.akismet-admin.php:256 views/config.php:203
+#: views/config.php:203 class.akismet-admin.php:256
 msgid "Status"
 msgstr "ステータス"
 
@@ -679,11 +678,11 @@ msgstr "自動再試行の際に Akismet がこのコメントをスパムと判
 msgid "Akismet cleared this comment during an automatic retry."
 msgstr "自動再試行の際に Akismet がこのコメントを非スパムと判定しました。"
 
-#: class.akismet.php:1263
+#: class.akismet.php:1268
 msgid "Please <a href=\"%1$s\">upgrade WordPress</a> to a current version, or <a href=\"%2$s\">downgrade to version 2.4 of the Akismet plugin</a>."
 msgstr "<a href=\"%1$s\">WordPress を最新バージョンにアップグレード</a>するか、<a href=\"%2$s\">Akismet プラグインをバージョン 2.4にダウングレードしてください</a>。"
 
-#: class.akismet.php:1263
+#: class.akismet.php:1268
 msgid "Akismet %s requires WordPress %s or higher."
 msgstr "Akismet %s には WordPress %s 以降が必要です。"
 
@@ -863,15 +862,15 @@ msgstr "Akismet を有効化"
 msgid "Get your API key"
 msgstr "API キーを取得"
 
-#. Plugin URI of the plugin/theme
+#. Plugin URI of the plugin
 msgid "https://akismet.com/"
 msgstr "https://akismet.com/"
 
-#. Author URI of the plugin/theme
+#. Author URI of the plugin
 msgid "https://automattic.com/wordpress-plugins/"
 msgstr "https://automattic.com/wordpress-plugins/"
 
-#. Author of the plugin/theme
+#. Author of the plugin
 msgid "Automattic"
 msgstr "Automattic"
 
