@@ -1,5 +1,5 @@
 ファイルシス                  サイズ  使用  残り 使用% マウント位置
-/dev/vda4                        26G  4.8G   21G   19% /
+/dev/vda4                        26G  4.7G   21G   19% /
 devtmpfs                        486M     0  486M    0% /dev
 tmpfs                           496M     0  496M    0% /dev/shm
 tmpfs                           496M   51M  446M   11% /run

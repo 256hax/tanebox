@@ -1,9 +1,9 @@
 読み込んだプラグイン:fastestmirror, langpacks
 Determining fastest mirrors
- * base: ftp.riken.jp
- * epel: ftp.riken.jp
- * extras: ftp.riken.jp
- * updates: ftp.riken.jp
+ * base: ftp.iij.ad.jp
+ * epel: ftp.iij.ad.jp
+ * extras: ftp.iij.ad.jp
+ * updates: ftp.iij.ad.jp
 インストール済みパッケージ
 GeoIP.x86_64                               1.5.0-13.el7           @base         
 ImageMagick.x86_64                         6.7.8.9-15.el7_2       @updates      
