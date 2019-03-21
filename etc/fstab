@@ -9,3 +9,6 @@
 UUID=c9321269-7178-43b4-b696-4de4e92a4518 /                       xfs     defaults        0 0
 UUID=babdb772-614a-4bc8-8ee1-ccf2739a7bb6 /boot                   xfs     defaults        0 0
 UUID=6a383227-8a0f-4415-8c25-846f0c01717c swap                    swap    defaults        0 0
+
+# TeraCloud
+https://uno.teracloud.jp/dav/ /mnt/teracloud  davfs  _netdev,rw,user 0 0
