@@ -864,12 +864,19 @@ class CMTT_RelatedTerms_Widget extends WP_Widget {
     public function form($instance) {
         $instance = wp_parse_args((array) $instance, array(
             'title' => '',
+            'force' => 0,
         ));
         $title = isset($instance['title']) ? $instance['title'] : '';
+        $force = isset($instance['force']) ? $instance['force'] : 0;
         ?>
         <p>
             <label for="<?php echo $this->get_field_id('title'); ?>">
                 Title: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
+            </label>
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('force'); ?>">
+                Always display: <input class="widefat" id="<?php echo $this->get_field_id('force'); ?>" name="<?php echo $this->get_field_name('force'); ?>" type="checkbox" <?php checked('1', $force); ?> value="1" />
             </label>
         </p>
         <?php
@@ -884,6 +891,7 @@ class CMTT_RelatedTerms_Widget extends WP_Widget {
     public function update($new_instance, $old_instance) {
         $instance = $old_instance;
         $instance['title'] = $new_instance['title'];
+        $instance['force'] = $new_instance['force'];
         return $instance;
     }
 
@@ -899,6 +907,8 @@ class CMTT_RelatedTerms_Widget extends WP_Widget {
         echo $before_widget;
 
         $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
+        $force = empty($instance['force']) ? false : $instance['force'];
+        
         if (!empty($title)) {
             echo $before_title . $title . $after_title;
         }
@@ -918,9 +928,9 @@ class CMTT_RelatedTerms_Widget extends WP_Widget {
          * updated function of the meta to "override" the general setting
          * this allows to disable the functionality globally but still enable it on a few selected pages
          */
-        $disableRelatedTermsForThisPage = $disableRelatedTermsGeneralSetting == $disableRelatedTermsForPage;
+        $disableRelatedTermsForThisPage = ($disableRelatedTermsGeneralSetting == $disableRelatedTermsForPage);
 
-        if (!in_array($id, $added) && is_singular() && !$disableRelatedTermsForThisPage) {
+        if (!in_array($id, $added) && is_singular() &&  ($force || !$disableRelatedTermsForThisPage)) {
             $added[] = $id;
             $relatedSnippet = CMTT_Related::renderRelatedTerms($replacedTerms);
             $content .= $relatedSnippet;
@@ -997,7 +1007,8 @@ class CMTT_RelatedArticles_Widget extends WP_Widget {
 
         global $post;
         if (!empty($post)) {
-            $relatedSnippet = CMTT_Related::renderRelatedArticles($post->ID, get_option('cmtt_glossary_showRelatedArticlesCount'), get_option('cmtt_glossary_showRelatedArticlesGlossaryCount'));
+            $force = true;
+            $relatedSnippet = CMTT_Related::renderRelatedArticles($post->ID, get_option('cmtt_glossary_showRelatedArticlesCount'), get_option('cmtt_glossary_showRelatedArticlesGlossaryCount'), $force);
             echo $relatedSnippet;
         }
         echo $after_widget;

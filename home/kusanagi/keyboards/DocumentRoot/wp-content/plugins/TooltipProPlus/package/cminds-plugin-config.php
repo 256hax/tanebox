@@ -234,7 +234,7 @@ $cminds_plugin_config = array(
     </div>
 </article>',
     'plugin-shortcodes-action'  => 'cmtt_glossary_supported_shortcodes',
-    'plugin-version'            => '3.8.6',
+    'plugin-version'            => '3.8.13',
     'plugin-abbrev'             => 'cmtt',
     'plugin-short-slug'         => 'cmtooltip',
     'plugin-parent-short-slug'  => '',

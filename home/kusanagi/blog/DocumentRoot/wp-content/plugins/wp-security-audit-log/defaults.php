@@ -139,6 +139,7 @@ function wsaldefaults_wsal_init() {
 				),
 			)
 		);
+
 		// Create list of default alerts.
 		$wsal->alerts->RegisterGroup(
 			array(
@@ -158,6 +159,7 @@ function wsaldefaults_wsal_init() {
 						array( 1005, E_WARNING, __( 'User logged in with existing session(s)', 'wp-security-audit-log' ), __( 'Successfully logged in. Another session from %IPAddress% for this user already exist.', 'wp-security-audit-log' ) ),
 						array( 1006, E_CRITICAL, __( 'User logged out all other sessions with the same username', 'wp-security-audit-log' ), __( 'Logged out all other sessions with the same username.', 'wp-security-audit-log' ) ),
 						array( 1007, E_CRITICAL, __( 'User session destroyed and logged out', 'wp-security-audit-log' ), __( 'Logged out session %TargetSessionID% which belonged to %TargetUserName%', 'wp-security-audit-log' ) ),
+						array( 1008, E_WARNING, __( 'Switched to another user', 'wp-security-audit-log' ), __( 'Switched to %TargetUserName% with role %TargetUserRole%.', 'wp-security-audit-log' ) ),
 						array( 2010, E_NOTICE, __( 'User uploaded file from Uploads directory', 'wp-security-audit-log' ), __( 'Uploaded the file %FileName% in %FilePath%.', 'wp-security-audit-log' ) ),
 						array( 2011, E_WARNING, __( 'User deleted file from Uploads directory', 'wp-security-audit-log' ), __( 'Deleted the file %FileName% from %FilePath%.', 'wp-security-audit-log' ) ),
 						array( 6007, E_NOTICE, __( 'User requests non-existing pages (404 Error Pages)', 'wp-security-audit-log' ), __( 'Has requested a non existing page (404 Error Pages) %Attempts% %Msg%. %LinkFile%%URL%', 'wp-security-audit-log' ) ),
@@ -469,7 +471,6 @@ function wsaldefaults_wsal_init() {
 						array( 4010, E_CRITICAL, __( 'Existing user added to a site', 'wp-security-audit-log' ), __( 'Added the existing user %TargetUsername% with %TargetUserRole% role to site %SiteName%.', 'wp-security-audit-log' ) ),
 						array( 4011, E_CRITICAL, __( 'User removed from site', 'wp-security-audit-log' ), __( 'Removed the user %TargetUsername% with role %TargetUserRole% from %SiteName% site.', 'wp-security-audit-log' ) ),
 						array( 4012, E_CRITICAL, __( 'New network user created', 'wp-security-audit-log' ), __( 'Created a new network user %NewUserData->Username%.', 'wp-security-audit-log' ) ),
-						array( 4013, E_CRITICAL, __( 'The forum role of a user was changed by another WordPress user', 'wp-security-audit-log' ), __( 'Change the forum role of the user %TargetUsername% from %OldRole% to %NewRole% by %UserChanger%.', 'wp-security-audit-log' ) ),
 						array( 7000, E_CRITICAL, __( 'New site added on the network', 'wp-security-audit-log' ), __( 'Added the site %SiteName% to the network.', 'wp-security-audit-log' ) ),
 						array( 7001, E_CRITICAL, __( 'Existing site archived', 'wp-security-audit-log' ), __( 'Archived the site %SiteName%.', 'wp-security-audit-log' ) ),
 						array( 7002, E_CRITICAL, __( 'Archived site has been unarchived', 'wp-security-audit-log' ), __( 'Unarchived the site %SiteName%.', 'wp-security-audit-log' ) ),
@@ -510,6 +511,7 @@ function wsaldefaults_wsal_init() {
 						array( 8020, E_WARNING, __( 'User permanently deleted topic', 'wp-security-audit-log' ), __( 'Permanently deleted the topic %TopicName%.', 'wp-security-audit-log' ) ),
 						array( 8021, E_WARNING, __( 'User restored topic from trash', 'wp-security-audit-log' ), __( 'Restored the topic %TopicName% from trash.' . ' %EditorLinkTopic%.', 'wp-security-audit-log' ) ),
 						array( 8022, E_NOTICE, __( 'User changed visibility of a topic', 'wp-security-audit-log' ), __( 'Changed the visibility of the topic %TopicName% from %OldVisibility% to %NewVisibility%.' . ' %EditorLinkTopic%.', 'wp-security-audit-log' ) ),
+						array( 4013, E_CRITICAL, __( 'The forum role of a user was changed by another WordPress user', 'wp-security-audit-log' ), __( 'Change the forum role of the user %TargetUsername% from %OldRole% to %NewRole% by %UserChanger%.', 'wp-security-audit-log' ) ),
 					),
 
 					/**
@@ -605,6 +607,8 @@ function wsaldefaults_wsal_init() {
 						array( 9039, E_WARNING, __( 'User permanently deleted a WooCommerce order', 'wp-security-audit-log' ), __( 'Permanently deleted the WooCommerce order %OrderTitle%.', 'wp-security-audit-log' ) ),
 						array( 9040, E_NOTICE, __( 'User edited a WooCommerce order', 'wp-security-audit-log' ), __( 'Edited the WooCommerce order %OrderTitle%. %EditorLinkOrder%.', 'wp-security-audit-log' ) ),
 						array( 9041, E_WARNING, __( 'User refunded a WooCommerce order', 'wp-security-audit-log' ), __( 'Refunded the WooCommerce order %OrderTitle%. %EditorLinkOrder%.', 'wp-security-audit-log' ) ),
+						array( 9083, E_NOTICE, __( 'User changed the billing address details', 'wp-security-audit-log' ), __( 'Changed the %AddressField% in the user\'s %TargetUsername% billing address.%ChangeText%', 'wp-security-audit-log' ) ),
+						array( 9084, E_NOTICE, __( 'User changed the shipping address details', 'wp-security-audit-log' ), __( 'Changed the %AddressField% in the user\'s %TargetUsername% shipping address.%ChangeText%', 'wp-security-audit-log' ) ),
 					),
 
 					/**
@@ -644,4 +648,4 @@ function wsaldefaults_wsal_init() {
 		load_include_custom_file( $wsal );
 	}
 }
-add_action( 'init', 'wsaldefaults_wsal_init' );
+add_action( 'init', 'wsaldefaults_wsal_init', 5 );

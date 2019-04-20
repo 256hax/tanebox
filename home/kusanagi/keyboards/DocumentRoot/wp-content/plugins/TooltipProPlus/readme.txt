@@ -4,8 +4,8 @@ Contributors: CreativeMindsSolutions
 Donate link: https://www.cminds.com/
 Tags: glossary, pages, posts, definitions, tooltip, automatic, hints, hint, tip, tool-tip
 Requires at least: 3.3
-Tested up to: 5.0.2
-Stable tag: 3.8.11
+Tested up to: 5.1.0
+Stable tag: 3.8.13
 
 PRO+ Version! Parses posts for defined glossary terms and adds links to the static glossary page containing the definition and a tooltip with the definition.
 
@@ -76,6 +76,18 @@ You can use glossaryLink. You can also define glossaryLinkMain if you wish to ha
 5. Glossary setting page in Admin
 
 == Changelog ==
+
+= 3.8.13 =
+* Feature: Added the option to link the Wikipedia term title to the Wikipedia page itself
+* Bug/change: Fixed the CSS for the Modern Table view
+* Feature: Added the option to disable the abbreviations in the title
+* Feature: Added the option to disable the abbreviations on the Glossary Index page
+* Feature: Added the option to overwrite the general setting for opening the glossary links on new tabs
+* Updated the Licensing Package
+
+= 3.8.12 =
+* Feature: Added the support for Gutenberg for Glossary Term pages
+* Feature: Added the way to display the Related Terms/Related Articles with widgets regardless of the meta options
 
 = 3.8.11 =
 * Updated the Licensing Package

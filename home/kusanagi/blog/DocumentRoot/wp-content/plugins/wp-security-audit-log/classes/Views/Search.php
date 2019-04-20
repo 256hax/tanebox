@@ -50,6 +50,15 @@ class WSAL_Views_Search extends WSAL_AbstractView {
 	}
 
 	/**
+	 * Check if the page title is visible.
+	 *
+	 * @return boolean
+	 */
+	public function is_title_visible() {
+		return false;
+	}
+
+	/**
 	 * Method: Get View Header.
 	 */
 	public function Header() {
@@ -82,7 +91,8 @@ class WSAL_Views_Search extends WSAL_AbstractView {
 			'wsal-swipebox-js',
 			$this->_plugin->GetBaseUrl() . '/js/jquery.swipebox.min.js',
 			array( 'jquery' ),
-			filemtime( $this->_plugin->GetBaseDir() . '/js/jquery.swipebox.min.js' )
+			filemtime( $this->_plugin->GetBaseDir() . '/js/jquery.swipebox.min.js' ),
+			false
 		);
 		wp_enqueue_script( 'wsal-swipebox-js' );
 
@@ -91,97 +101,42 @@ class WSAL_Views_Search extends WSAL_AbstractView {
 			'wsal-extensions-js',
 			$this->_plugin->GetBaseUrl() . '/js/extensions.js',
 			array( 'wsal-swipebox-js' ),
-			filemtime( $this->_plugin->GetBaseDir() . '/js/extensions.js' )
+			filemtime( $this->_plugin->GetBaseDir() . '/js/extensions.js' ),
+			false
 		);
 		wp_enqueue_script( 'wsal-extensions-js' );
 	}
 
 	/**
-	 * Method: Get View.
+	 * Page View.
 	 */
 	public function Render() {
-		?>
-		<div class="wrap-advertising-page-single">
-			<div class="wsal-row">
-				<div class="wsal-col">
-					<div class="icon" style='background-image:url("<?php echo esc_url( $this->_plugin->GetBaseUrl() ); ?>/img/search.jpg");'></div>
-				</div>
-				<!-- /.wsal-col -->
+		$title        = __( 'Search & Filters for the Activity Log', 'wp-security-audit-log' );
+		$description  = __( 'You can find all the information you want in the activity log, if you know what you are looking for and have the right tools. Upgrade to premium so you can:', 'wp-security-audit-log' );
+		$addon_img    = trailingslashit( WSAL_BASE_URL ) . 'img/' . $this->GetSafeViewName() . '.jpg';
+		$premium_list = array(
+			__( 'Do text searches and use filters to fine tune the search results', 'wp-security-audit-log' ),
+			__( 'Easily find when and who did a specific change on your site', 'wp-security-audit-log' ),
+			__( 'Easily identify and track back suspicious user behaviour', 'wp-security-audit-log' ),
+			__( 'Search for the cause of a problem and ease troubleshooting', 'wp-security-audit-log' ),
+			__( 'Save search terms and filters for future use and improved productivity', 'wp-security-audit-log' ),
+		);
+		$subtext      = false;
+		$screenshots  = array(
+			array(
+				'desc' => __( 'Use the text search to find a specific change.', 'wp-security-audit-log' ),
+				'img'  => trailingslashit( WSAL_BASE_URL ) . 'img/search/search_1.png',
+			),
+			array(
+				'desc' => __( 'Configure any filter you need to fine tune the search results and find what you are looking for with much less effort.', 'wp-security-audit-log' ),
+				'img'  => trailingslashit( WSAL_BASE_URL ) . 'img/search/search_2.png',
+			),
+			array(
+				'desc' => __( 'Save search terms and filters to run the searches again in the future with just a single click.', 'wp-security-audit-log' ),
+				'img'  => trailingslashit( WSAL_BASE_URL ) . 'img/search/search_3.png',
+			),
+		);
 
-				<div class="wsal-col">
-					<h3><?php esc_html_e( 'Search', 'wp-security-audit-log' ); ?></h3>
-					<p>
-						<?php esc_html_e( 'Upgrade to Premium to:', 'wp-security-audit-log' ); ?>
-					</p>
-					<p>
-						<ul class="wsal-features-list">
-							<li><?php esc_html_e( 'Easily find and track back a specific change or suspicious user behaviour,', 'wp-security-audit-log' ); ?></li>
-							<li><?php esc_html_e( 'Easily find the root of a problem to ease troubleshooting,', 'wp-security-audit-log' ); ?></li>
-							<li><?php esc_html_e( 'Do free-text based searches in the WordPress audit log,', 'wp-security-audit-log' ); ?></li>
-							<li><?php esc_html_e( 'Use filters to fine tune the search results,', 'wp-security-audit-log' ); ?></li>
-							<li><?php esc_html_e( 'Save search terms & filters for improved productivity,', 'wp-security-audit-log' ); ?></li>
-							<li><?php esc_html_e( '& more.', 'wp-security-audit-log' ); ?></li>
-						</ul>
-					</p>
-					<?php
-					// Buy Now button link.
-					$buy_now = add_query_arg( 'page', 'wsal-auditlog-pricing', admin_url( 'admin.php' ) );
-					$buy_now_target = '';
-
-					// If user is not super admin and website is multisite then change the URL.
-					if ( $this->_plugin->IsMultisite() && ! is_super_admin() ) {
-						$buy_now = 'https://www.wpsecurityauditlog.com/pricing/';
-						$buy_now_target = 'target="_blank"';
-					} elseif ( $this->_plugin->IsMultisite() && is_super_admin() ) {
-						$buy_now = add_query_arg( 'page', 'wsal-auditlog-pricing', network_admin_url( 'admin.php' ) );
-					} elseif ( ! $this->_plugin->IsMultisite() && ! current_user_can( 'manage_options' ) ) {
-						$buy_now = 'https://www.wpsecurityauditlog.com/pricing/';
-						$buy_now_target = 'target="_blank"';
-					}
-
-					$more_info = add_query_arg(
-						array(
-							'utm_source' => 'plugin',
-							'utm_medium' => 'page',
-							'utm_content' => 'search+more+info',
-							'utm_campaign' => 'upgrade+premium',
-						),
-						'https://www.wpsecurityauditlog.com/premium-features/'
-					);
-					?>
-					<p>
-						<a class="button-primary wsal-extension-btn" href="<?php echo esc_attr( $buy_now ); ?>" <?php echo esc_attr( $buy_now_target ); ?>><?php esc_html_e( 'Upgrade to Premium', 'wp-security-audit-log' ); ?></a>
-						<a class="button-primary wsal-extension-btn" href="<?php echo esc_attr( $more_info ); ?>" target="_blank"><?php esc_html_e( 'More Information', 'wp-security-audit-log' ); ?></a>
-					</p>
-				</div>
-				<!-- /.wsal-col -->
-			</div>
-			<!-- /.wsal-row -->
-
-			<div class="wsal-row">
-				<div class="wsal-col">
-					<h3><?php esc_html_e( 'Screenshots', 'wp-security-audit-log' ); ?></h3>
-
-					<p>
-						<ul class="wsal-features-list">
-							<li>
-								<?php esc_html_e( 'Use the free-text based search to find a specific change and use the filters to fine tune the search results.', 'wp-security-audit-log' ); ?><br />
-								<a class="swipebox" title="<?php esc_attr_e( 'Use the free-text based search to find a specific change and use the filters to fine tune the search results.', 'wp-security-audit-log' ); ?>"
-									href="<?php echo esc_url( $this->_plugin->GetBaseUrl() ); ?>/img/search/search.png">
-									<img width="500" src="<?php echo esc_url( $this->_plugin->GetBaseUrl() ); ?>/img/search/search.png">
-								</a>
-							</li>
-						</ul>
-					</p>
-
-					<p>
-						<a class="button-primary wsal-extension-btn" href="<?php echo esc_attr( $buy_now ); ?>" <?php echo esc_attr( $buy_now_target ); ?>><?php esc_html_e( 'Upgrade to Premium', 'wp-security-audit-log' ); ?></a>
-						<a class="button-primary wsal-extension-btn" href="<?php echo esc_attr( $more_info ); ?>" target="_blank"><?php esc_html_e( 'More Information', 'wp-security-audit-log' ); ?></a>
-					</p>
-				</div>
-			</div>
-			<!-- /.wsal-row -->
-		</div>
-		<?php
+		require_once dirname( __FILE__ ) . '/addons/html-view.php';
 	}
 }

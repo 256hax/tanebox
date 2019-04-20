@@ -87,6 +87,7 @@
     list-style-type: none;
     min-height: 1.5em;
     border: 1px solid #EAEAEA;
+    display: flex;
 }
 
 .cm-glossary.table.modern ul.glossaryList > li:last-child {
@@ -96,23 +97,21 @@
 .cm-glossary.table.modern ul.glossaryList li > .glossaryLink,
 .cm-glossary.table.modern ul.glossaryList li > .glossaryLinkMain
 {
-    float: left;
     list-style: none;
     list-style-type: none;
     margin: 0.5em;
     display: inline;
-    max-width: 33%;
+    width: 33%;
 }
 
 .cm-glossary.table.modern ul.glossaryList li > div.glossary_itemdesc {
-    width: 60%;
     list-style: none;
     list-style-type: none;
-    margin-left: 37%;
     min-height: 3em;
     padding: 0.5em 0 0.5em 2%;
     border-left: 1px solid #E5E5E5;
     word-wrap: break-word;
+    flex: 1;
 }
 
 .cm-glossary.table.modern ul.glossaryList li.the-index-letter {
@@ -476,50 +475,6 @@ ul.pageNumbers li a {text-decoration: none;border: none;padding: 0;margin: 0;}
     border-top: 1px solid #eaeaea;
     margin: 10px 1px 0 0;
     border-bottom: none;
-}
-
-.cm-glossary.table.modern ul.glossaryList > li {
-    list-style: none;
-    list-style-type: none;
-    min-height: 1.5em;
-    border: 1px solid #EAEAEA;
-}
-
-.cm-glossary.table.modern ul.glossaryList > li:last-child {
-    border-top: none;
-}
-
-.cm-glossary.table.modern ul.glossaryList li > .glossaryLink,
-.cm-glossary.table.modern ul.glossaryList li > .glossaryLinkMain
-{
-    float: left;
-    list-style: none;
-    list-style-type: none;
-    margin: 0.5em;
-    display: inline;
-    max-width: 33%;
-}
-
-.cm-glossary.table.modern ul.glossaryList li > div.glossary_itemdesc {
-    width: 60%;
-    list-style: none;
-    list-style-type: none;
-    margin-left: 37%;
-    min-height: 3em;
-    padding: 0.5em 0 0.5em 2%;
-    border-left: 1px solid #E5E5E5;
-    word-wrap: break-word;
-}
-
-.cm-glossary.table.modern ul.glossaryList li.the-index-letter {
-    font-size: 20px;
-    line-height: 1.5em;
-    text-transform: uppercase;
-    clear: both;
-    width: 100%;
-    border-bottom: 1px solid #EAEAEA;
-    padding: 5px 0;
-    border: none;
 }
 
 .cm-glossary.table ul.glossaryList li.the-index-letter > * {

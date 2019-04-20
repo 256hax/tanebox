@@ -157,10 +157,18 @@
                         <td colspan="2" class="cmtt_field_help_container">Change abbreviation square brackets to round</td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row">Disable glossary abbreviations</th>
+                        <th scope="row">Display abbreviations after term title</th>
                         <td>
-                            <input type="hidden" name="cmtt_disableGlossaryAbbr" value="0" />
-                            <input type="checkbox" name="cmtt_disableGlossaryAbbr" <?php checked(true, get_option('cmtt_disableGlossaryAbbr', '0')); ?> value="1" />
+                            <input type="hidden" name="cmtt_glossaryAbbreviationsInTitle" value="0" />
+                            <input type="checkbox" name="cmtt_glossaryAbbreviationsInTitle" <?php checked(true, get_option('cmtt_glossaryAbbreviationsInTitle', '1')); ?> value="1" />
+                        </td>
+                        <td colspan="2" class="cmtt_field_help_container">Disable showing abbreviations in the Glossary</td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">Display abbreviations in Glossary Index</th>
+                        <td>
+                            <input type="hidden" name="cmtt_glossaryAbbreviationsInIndex" value="0" />
+                            <input type="checkbox" name="cmtt_glossaryAbbreviationsInIndex" <?php checked(true, get_option('cmtt_glossaryAbbreviationsInIndex', '1')); ?> value="1" />
                         </td>
                         <td colspan="2" class="cmtt_field_help_container">Disable showing abbreviations in the Glossary</td>
                     </tr>

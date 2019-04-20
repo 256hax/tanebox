@@ -61,6 +61,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 	 */
 	public function __construct( WpSecurityAuditLog $plugin ) {
 		parent::__construct( $plugin );
+		add_action( 'admin_init', array( $this, 'setup_settings_tabs' ) );
 		add_action( 'wp_ajax_AjaxCheckSecurityToken', array( $this, 'AjaxCheckSecurityToken' ) );
 		add_action( 'wp_ajax_AjaxRunCleanup', array( $this, 'AjaxRunCleanup' ) );
 		add_action( 'wp_ajax_AjaxGetAllUsers', array( $this, 'AjaxGetAllUsers' ) );
@@ -72,6 +73,22 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 		add_action( 'wp_ajax_wsal_stop_file_changes_scan', array( $this, 'stop_file_changes_scan' ) );
 		add_action( 'wp_ajax_wsal_reset_settings', array( $this, 'reset_settings' ) );
 		add_action( 'wp_ajax_wsal_purge_activity', array( $this, 'purge_activity' ) );
+	}
+
+	/**
+	 * Setup WSAL Settings Page Tabs.
+	 *
+	 * @since 3.4
+	 */
+	public function setup_settings_tabs() {
+		// @codingStandardsIgnoreStart
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : false;
+		// @codingStandardsIgnoreEnd
+
+		// Verify that the current page is WSAL settings page.
+		if ( empty( $page ) || $this->GetSafeViewName() !== $page ) {
+			return;
+		}
 
 		// Tab links.
 		$wsal_setting_tabs = array(
@@ -205,9 +222,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 	 * @throws Exception - Unrecognized settings tab error.
 	 */
 	protected function Save() {
-		check_admin_referer( 'wsal-settings' );
-
-		// Call respective tab save functions if they are set.
+		// Call respective tab save functions if they are set. Nonce is already verified at this point.
 		if ( ! empty( $this->current_tab ) && ! empty( $this->wsal_setting_tabs[ $this->current_tab ]['save'] ) ) {
 			call_user_func( $this->wsal_setting_tabs[ $this->current_tab ]['save'] );
 		} else {
@@ -323,24 +338,32 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 	 * Method: Get View.
 	 */
 	public function Render() {
-		// Filter $_POST array for security.
-		$post_array = filter_input_array( INPUT_POST );
-
-		if ( isset( $post_array['_wpnonce'] ) && ! wp_verify_nonce( $post_array['_wpnonce'], 'wsal-settings' ) ) {
-			wp_die( esc_html__( 'Nonce verification failed.', 'wp-security-audit-log' ) );
+		// Verify nonce if a form is submitted.
+		if ( isset( $_POST['_wpnonce'] ) ) {
+			check_admin_referer( 'wsal-settings' );
 		}
 
 		if ( ! $this->_plugin->settings->CurrentUserCan( 'edit' ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wp-security-audit-log' ) );
 		}
 
-		if ( isset( $post_array['submit'] ) ) {
+		// Check to see if section parameter is set in the URL.
+		$section = isset( $_GET['section'] ) ? sanitize_text_field( wp_unslash( $_GET['section'] ) ) : false;
+
+		if ( isset( $_POST['submit'] ) ) {
 			try {
-				$this->Save();
-				?><div class="updated">
-					<p><?php esc_html_e( 'Settings have been saved.', 'wp-security-audit-log' ); ?></p>
-				</div>
-				<?php
+				$this->Save(); // Save settings.
+				if ( 'sms-provider' === $this->current_tab && $section && 'test' === $section ) :
+					?>
+					<div class="updated">
+						<p><?php esc_html_e( 'Message sent successfully.', 'wp-security-audit-log' ); ?></p>
+					</div>
+				<?php else : ?>
+					<div class="updated">
+						<p><?php esc_html_e( 'Settings have been saved.', 'wp-security-audit-log' ); ?></p>
+					</div>
+					<?php
+				endif;
 			} catch ( Exception $ex ) {
 				?>
 				<div class="error"><p><?php esc_html_e( 'Error: ', 'wp-security-audit-log' ); ?><?php echo esc_html( $ex->getMessage() ); ?></p></div>
@@ -361,7 +384,6 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 			</div>
 			<?php
 		}
-
 		?>
 		<nav id="wsal-tabs" class="nav-tab-wrapper">
 			<?php foreach ( $this->wsal_setting_tabs as $tab_id => $tab ) : ?>
@@ -393,7 +415,13 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 				}
 				?>
 			</div>
-			<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes"></p>
+			<?php
+			if ( 'sms-provider' === $this->current_tab && $section && 'test' === $section ) {
+				submit_button( __( 'Send Message', 'wp-security-audit-log' ) );
+			} else {
+				submit_button();
+			}
+			?>
 		</form>
 		<script type="text/javascript">
 		<!--
@@ -474,7 +502,33 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 				<!-- / Reverse Proxy / Firewall Options -->
 			</tbody>
 		</table>
-		<!-- Reverse Proxy -->
+		<!-- Events Navigation Type -->
+
+		<h3><?php esc_html_e( 'Do you want the activity log viewer to auto refresh?', 'wp-security-audit-log' ); ?></h3>
+		<p class="description"><?php esc_html_e( 'The activity log viewer auto refreshes every 30 seconds when opened so you can see the latest events as they happen almost in real time.', 'wp-security-audit-log' ); ?></p>
+		<table class="form-table wsal-tab">
+			<tbody>
+				<tr>
+					<th><label for="aroption_on"><?php esc_html_e( 'Refresh Audit Log Viewer', 'wp-security-audit-log' ); ?></label></th>
+					<td>
+						<fieldset>
+							<?php $are = $this->_plugin->settings->IsRefreshAlertsEnabled(); ?>
+							<label for="aroption_on">
+								<input type="radio" name="EnableAuditViewRefresh" id="aroption_on" style="margin-top: -2px;" <?php checked( $are ); ?> value="1">
+								<span><?php esc_html_e( 'Auto refresh', 'wp-security-audit-log' ); ?></span>
+							</label>
+							<br/>
+							<label for="aroption_off">
+								<input type="radio" name="EnableAuditViewRefresh" id="aroption_off" style="margin-top: -2px;" <?php checked( $are, false ); ?> value="0">
+								<span><?php esc_html_e( 'Do not auto refresh', 'wp-security-audit-log' ); ?></span>
+							</label>
+						</fieldset>
+					</td>
+				</tr>
+				<!-- Refresh Audit Log Viewer -->
+			</tbody>
+		</table>
+		<!-- Refresh Audit Log -->
 
 		<h3><?php esc_html_e( 'Display latest events widget in Dashboard & Admin bar', 'wp-security-audit-log' ); ?></h3>
 		<p class="description">
@@ -835,6 +889,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 		// Get $_POST global array.
 		$post_array = filter_input_array( INPUT_POST );
 
+		$this->_plugin->settings->SetRefreshAlertsEnabled( $post_array['EnableAuditViewRefresh'] );
 		$this->_plugin->settings->set_events_type_nav( sanitize_text_field( $post_array['events-type-nav'] ) );
 		$this->_plugin->settings->set_use_email( sanitize_text_field( $post_array['use-email'] ) );
 		$this->_plugin->settings->SetFromEmail( sanitize_email( $post_array['FromEmail'] ) );
@@ -974,7 +1029,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 									?>
 								</p>
 								<p>
-									<a class="button-primary" href="<?php echo esc_url( add_query_arg( 'action', 'AjaxRunCleanup', admin_url( 'admin-ajax.php' ) ) ); ?>"><?php esc_html_e( 'Purge Old Data', 'wp-security-audit-log' ) ?></a>
+									<a class="button-primary" href="<?php echo esc_url( add_query_arg( 'action', 'AjaxRunCleanup', admin_url( 'admin-ajax.php' ) ) ); ?>"><?php esc_html_e( 'Purge Old Data', 'wp-security-audit-log' ); ?></a>
 								</p>
 							<?php endif; ?>
 						</td>
@@ -1094,34 +1149,6 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 		</table>
 		<!-- Audit Log Columns -->
 
-		<h3><?php esc_html_e( 'Do you want the activity log viewer to auto refresh?', 'wp-security-audit-log' ); ?></h3>
-		<p class="description"><?php esc_html_e( 'The activity log viewer auto refreshes every 30 seconds when opened so you can see the latest events as they happen almost in real time.', 'wp-security-audit-log' ); ?></p>
-		<table class="form-table wsal-tab">
-			<tbody>
-				<tr>
-					<th><label for="aroption_on"><?php esc_html_e( 'Refresh Audit Log Viewer', 'wp-security-audit-log' ); ?></label></th>
-					<td>
-						<fieldset>
-							<?php $are = $this->_plugin->settings->IsRefreshAlertsEnabled(); ?>
-							<label for="aroption_on">
-								<input type="radio" name="EnableAuditViewRefresh" id="aroption_on" style="margin-top: -2px;"
-									<?php checked( $are ); ?> value="1">
-								<span><?php esc_html_e( 'Auto refresh', 'wp-security-audit-log' ); ?></span>
-							</label>
-							<br/>
-							<label for="aroption_off">
-								<input type="radio" name="EnableAuditViewRefresh" id="aroption_off" style="margin-top: -2px;"
-									<?php checked( $are, false ); ?> value="0">
-								<span><?php esc_html_e( 'Do not auto refresh', 'wp-security-audit-log' ); ?></span>
-							</label>
-						</fieldset>
-					</td>
-				</tr>
-				<!-- Refresh Audit Log Viewer -->
-			</tbody>
-		</table>
-		<!-- Refresh Audit Log -->
-
 		<h3><?php esc_html_e( 'Do you want to keep a log of WordPress background activity?', 'wp-security-audit-log' ); ?></h3>
 		<p class="description">
 			<?php esc_html_e( 'WordPress does a lot of things in the background that you do not necessarily need to know about, such as; deletion of post revisions, deletion of auto saved drafts etc. By default the plugin does not report them since there might be a lot and are irrelevant to the user.', 'wp-security-audit-log' ); ?>
@@ -1166,7 +1193,6 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 		$this->_plugin->settings->SetPruningDateEnabled( isset( $post_array['PruneBy'] ) ? 'date' === $post_array['PruneBy'] : '' );
 		$this->_plugin->settings->SetPruningDate( $pruning_date );
 		$this->_plugin->settings->set_pruning_unit( $pruning_unit );
-		$this->_plugin->settings->SetRefreshAlertsEnabled( $post_array['EnableAuditViewRefresh'] );
 		$this->_plugin->settings->SetTimezone( $post_array['Timezone'] );
 		$this->_plugin->settings->set_type_username( $post_array['type_username'] );
 		$this->_plugin->settings->SetWPBackend( isset( $post_array['WPBackend'] ) ? sanitize_text_field( $post_array['WPBackend'] ) : false );
@@ -1467,7 +1493,7 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 				<th><label for="wsal-scan-file-size"><?php esc_html_e( 'File Size Limit', 'wp-security-audit-log' ); ?></label></th>
 				<td>
 					<fieldset>
-						<input type="number" id="wsal-scan-file-size" name="wsal-scan-file-size" min="1" max="100" value="<?php echo isset( $this->scan_settings['scan_file_size_limit'] ) ? esc_attr( $this->scan_settings['scan_file_size_limit'] ) : false ?>" /> <?php esc_html_e( 'MB', 'wp-security-audit-log' ); ?>
+						<input type="number" id="wsal-scan-file-size" name="wsal-scan-file-size" min="1" max="100" value="<?php echo isset( $this->scan_settings['scan_file_size_limit'] ) ? esc_attr( $this->scan_settings['scan_file_size_limit'] ) : false; ?>" /> <?php esc_html_e( 'MB', 'wp-security-audit-log' ); ?>
 					</fieldset>
 				</td>
 			</tr>
@@ -2187,10 +2213,10 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 
 		// Get custom post types.
 		$custom_post_types = array();
-		$output     = 'names'; // names or objects, note names is the default
-		$operator   = 'and'; // Conditions: and, or.
-		$post_types = get_post_types( array(), $output, $operator );
-		$post_types = array_diff( $post_types, array( 'attachment', 'revision', 'nav_menu_item', 'customize_changeset', 'custom_css' ) );
+		$output            = 'names'; // names or objects, note names is the default
+		$operator          = 'and'; // Conditions: and, or.
+		$post_types        = get_post_types( array(), $output, $operator );
+		$post_types        = array_diff( $post_types, array( 'attachment', 'revision', 'nav_menu_item', 'customize_changeset', 'custom_css' ) );
 		foreach ( $post_types as $post_type ) {
 			if ( strpos( $post_type, $get_array['term'] ) !== false ) {
 				array_push( $custom_post_types, $post_type );
@@ -2266,10 +2292,12 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 					if ( ! in_array( $dir_name, $server_dirs, true ) ) {
 						$excluded_option[] = $dir_name;
 					} else {
-						echo wp_json_encode( array(
-							'success' => false,
-							'message' => esc_html__( 'You can exclude this directory using the check boxes above.', 'wp-security-audit-log' ),
-						) );
+						echo wp_json_encode(
+							array(
+								'success' => false,
+								'message' => esc_html__( 'You can exclude this directory using the check boxes above.', 'wp-security-audit-log' ),
+							)
+						);
 						exit();
 					}
 				} else {
@@ -2285,10 +2313,12 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 					$this->_plugin->SetGlobalOption( 'scan-excluded-directories', $excluded_option );
 				}
 
-				echo wp_json_encode( array(
-					'success' => true,
-					'message' => esc_html__( 'Option added to excluded types.', 'wp-security-audit-log' ),
-				) );
+				echo wp_json_encode(
+					array(
+						'success' => true,
+						'message' => esc_html__( 'Option added to excluded types.', 'wp-security-audit-log' ),
+					)
+				);
 			} else {
 				if ( 'file' === $data_type ) {
 					$message = esc_html__( 'This file is already excluded from the scan.', 'wp-security-audit-log' );
@@ -2297,16 +2327,20 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 				} elseif ( 'dir' === $data_type ) {
 					$message = esc_html__( 'This directory is already excluded from the scan.', 'wp-security-audit-log' );
 				}
-				echo wp_json_encode( array(
-					'success' => false,
-					'message' => $message,
-				) );
+				echo wp_json_encode(
+					array(
+						'success' => false,
+						'message' => $message,
+					)
+				);
 			}
 		} else {
-			echo wp_json_encode( array(
-				'success' => false,
-				'message' => esc_html__( 'Option name is empty.', 'wp-security-audit-log' ),
-			) );
+			echo wp_json_encode(
+				array(
+					'success' => false,
+					'message' => esc_html__( 'Option name is empty.', 'wp-security-audit-log' ),
+				)
+			);
 		}
 		exit();
 	}
@@ -2399,15 +2433,19 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 				$this->_plugin->SetGlobalOption( 'site_content', $site_content );
 			}
 
-			echo wp_json_encode( array(
-				'success' => true,
-				'message' => esc_html__( 'Option removed from excluded scan types.', 'wp-security-audit-log' ),
-			) );
+			echo wp_json_encode(
+				array(
+					'success' => true,
+					'message' => esc_html__( 'Option removed from excluded scan types.', 'wp-security-audit-log' ),
+				)
+			);
 		} else {
-			echo wp_json_encode( array(
-				'success' => false,
-				'message' => esc_html__( 'Something went wrong.', 'wp-security-audit-log' ),
-			) );
+			echo wp_json_encode(
+				array(
+					'success' => false,
+					'message' => esc_html__( 'Something went wrong.', 'wp-security-audit-log' ),
+				)
+			);
 		}
 		exit();
 	}
@@ -2431,10 +2469,12 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 
 		// Return if a cron is running.
 		if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
-			echo wp_json_encode( array(
-				'success' => false,
-				'message' => esc_html__( 'A cron job is in progress.', 'wp-security-audit-log' ),
-			) );
+			echo wp_json_encode(
+				array(
+					'success' => false,
+					'message' => esc_html__( 'A cron job is in progress.', 'wp-security-audit-log' ),
+				)
+			);
 			exit();
 		}
 
@@ -2459,16 +2499,20 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 				if ( ! $this->_plugin->GetGlobalOption( 'stop-scan', false ) ) {
 					if ( 0 === $dir ) {
 						// Scan started alert.
-						$this->_plugin->alerts->Trigger( 6033, array(
-							'CurrentUserID' => '0',
-							'ScanStatus'    => 'started',
-						) );
+						$this->_plugin->alerts->Trigger(
+							6033, array(
+								'CurrentUserID' => '0',
+								'ScanStatus'    => 'started',
+							)
+						);
 					} elseif ( 6 === $dir ) {
 						// Scan stopped.
-						$this->_plugin->alerts->Trigger( 6033, array(
-							'CurrentUserID' => '0',
-							'ScanStatus'    => 'stopped',
-						) );
+						$this->_plugin->alerts->Trigger(
+							6033, array(
+								'CurrentUserID' => '0',
+								'ScanStatus'    => 'stopped',
+							)
+						);
 					}
 					$file_changes->detect_file_changes( true, $dir );
 				} else {
@@ -2477,15 +2521,19 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 			}
 			$this->_plugin->SetGlobalOption( 'stop-scan', false );
 
-			echo wp_json_encode( array(
-				'success' => true,
-				'message' => esc_html__( 'Scan started successfully.', 'wp-security-audit-log' ),
-			) );
+			echo wp_json_encode(
+				array(
+					'success' => true,
+					'message' => esc_html__( 'Scan started successfully.', 'wp-security-audit-log' ),
+				)
+			);
 		} else {
-			echo wp_json_encode( array(
-				'success' => false,
-				'message' => esc_html__( 'Something went wrong.', 'wp-security-audit-log' ),
-			) );
+			echo wp_json_encode(
+				array(
+					'success' => false,
+					'message' => esc_html__( 'Something went wrong.', 'wp-security-audit-log' ),
+				)
+			);
 		}
 		exit();
 	}
@@ -2504,20 +2552,24 @@ class WSAL_Views_Settings extends WSAL_AbstractView {
 
 		// Die if nonce verification failed.
 		if ( ! wp_verify_nonce( $post_array['nonce'], 'wsal-stop-scan' ) ) {
-			echo wp_json_encode( array(
-				'success' => false,
-				'message' => esc_html__( 'Nonce verification failed.', 'wp-security-audit-log' ),
-			) );
+			echo wp_json_encode(
+				array(
+					'success' => false,
+					'message' => esc_html__( 'Nonce verification failed.', 'wp-security-audit-log' ),
+				)
+			);
 			exit();
 		}
 
 		// Set stop scan option to true.
 		$this->_plugin->SetGlobalOption( 'stop-scan', true );
 
-		echo wp_json_encode( array(
-			'success' => true,
-			'message' => esc_html__( 'Scan started successfully.', 'wp-security-audit-log' ),
-		) );
+		echo wp_json_encode(
+			array(
+				'success' => true,
+				'message' => esc_html__( 'Scan started successfully.', 'wp-security-audit-log' ),
+			)
+		);
 		exit();
 	}
 

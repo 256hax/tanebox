@@ -364,7 +364,7 @@ class CMTT_Related {
         return $results;
     }
 
-    public static function renderRelatedArticles($glossaryId, $limitArticles = 5, $limitGlossary = 5, $heading = false) {
+    public static function renderRelatedArticles($glossaryId, $limitArticles = 5, $limitGlossary = 5, $force = false) {
         $html = '';
         $basicArticlesType = 'all';
 
@@ -375,7 +375,7 @@ class CMTT_Related {
         /*
          * If terms are disabled for this item specifically, or neither the custom related terms nor automated ones are enabled
          */
-        if ($disableRelatedArticlesForThisTerm || (!$showRelatedArticles && !$showRelatedCustomArticles)) {
+        if (!$force && ($disableRelatedArticlesForThisTerm || (!$showRelatedArticles && !$showRelatedCustomArticles))) {
             return '';
         }
 

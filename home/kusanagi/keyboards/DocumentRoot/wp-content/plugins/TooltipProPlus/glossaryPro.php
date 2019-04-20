@@ -228,6 +228,7 @@ class CMTT_Pro {
 
     public static function onBeforeParsing($runParser) {
         if ($runParser) {
+            
         } else {
             
         }
@@ -837,6 +838,7 @@ class CMTT_Pro {
             'query_var' => true,
             'supports' => array('title', 'editor', 'author', 'excerpt', 'revisions',
                 'custom-fields', 'page-attributes', 'post-thumbnails', 'thumbnail'),
+            'show_in_rest' => true,
         );
 
         if (!$comments) {
@@ -1373,7 +1375,7 @@ class CMTT_Pro {
              * The loops prepares the search query for the replacement
              */
             foreach ($glossary_index as $glossary_item) {
-                $dontParseTerm = (bool) CMTT_Pro::_get_meta( '_cmtt_exclude_parsing', $glossary_item->ID);
+                $dontParseTerm = (bool) CMTT_Pro::_get_meta('_cmtt_exclude_parsing', $glossary_item->ID);
                 if ($dontParseTerm) {
                     continue;
                 }
@@ -1850,7 +1852,8 @@ class CMTT_Pro {
         /*
          * Open in new window
          */
-        $windowTarget = (get_option('cmtt_glossaryInNewPage') == 1) ? ' target="_blank" ' : '';
+        $newPage = get_option('cmtt_glossaryInNewPage') || CMTT_Pro::_get_meta('_cmtt_new_page_exception', $post->ID);
+        $windowTarget = $newPage ? ' target="_blank" ' : '';
         $titleAttrPrefix = __(get_option('cmtt_titleAttributeLabelPrefix', 'Glossary:'), 'cm-tooltip-glossary');
         $titleAttr = (get_option('cmtt_showTitleAttribute') == 1) ? ' title="' . $titleAttrPrefix . ' ' . esc_attr($glossary_item->post_title) . '" ' : '';
 
@@ -2463,18 +2466,18 @@ class CMTT_Pro {
         $upload_dir = wp_upload_dir();
         $filename = basename($url);
         if (wp_mkdir_p($upload_dir['path'])) {
-            $file = $upload_dir['path'] . '/' . $filename;
+            $file = trailingslashit($upload_dir['path']) . $filename;
         } else {
-            $file = $upload_dir['basedir'] . '/' . $filename;
+            $file = trailingslashit($upload_dir['basedir']) . $filename;
         }
         file_put_contents($file, $image_data);
-        $guid = $upload_dir['path'] . '/' . $filename;
+        $guid = trailingslashit($upload_dir['path']) . $filename;
 
         // Check image file type
         $wp_filetype = wp_check_filetype($filename, null);
-        $atache_path = $upload_dir['subdir'] . '/' . $filename;
+        $atache_path = ltrim(trailingslashit($upload_dir['subdir']) . $filename, DIRECTORY_SEPARATOR);
         $attachment = array(
-            'guid' => $upload_dir['url'] . '/' . $filename,
+            'guid' => trailingslashit($upload_dir['url']) . $filename,
             'post_mime_type' => $wp_filetype['type'],
             'post_title' => $img_title,
             'post_content' => '',
@@ -2706,6 +2709,9 @@ class CMTT_Pro {
         $disableACF = get_post_meta($post->ID, '_cmtt_disable_acf_for_page', true);
         $disableACFforPage = (int) (!empty($disableACF) && $disableACF == 1 );
 
+        $newPageException = get_post_meta($post->ID, '_cmtt_new_page_exception', true);
+        $newPageExceptionForPage = (int) (!empty($newPageException) && $newPageException == 1 );
+
         echo '<div class="cmtt_disable_tooltip_for_page_field">';
         echo '<label for="glossary_disable_tooltip_for_page" class="blocklabel">';
         echo '<input type="checkbox" name="glossary_disable_tooltip_for_page" id="glossary_disable_tooltip_for_page" value="1" ' . checked(1, $disableTooltipForPage, false) . '>';
@@ -2734,6 +2740,12 @@ class CMTT_Pro {
         echo '<label for="cmtt_disable_acf_for_page" class="blocklabel">';
         echo '<input type="checkbox" name="cmtt_disable_acf_for_page" id="cmtt_disable_acf_for_page" value="1" ' . checked(1, $disableACFforPage, false) . '>';
         echo '&nbsp;&nbsp;&nbsp;Don\'t search for glossary items in ACF fields on this page.</label>';
+        echo '</div>';
+
+        echo '<div class="cmtt_disable_for_page_field">';
+        echo '<label for="cmtt_new_page_exception" class="blocklabel">';
+        echo '<input type="checkbox" name="cmtt_new_page_exception" id="cmtt_new_page_exception" value="1" ' . checked(1, $newPageExceptionForPage, false) . '>';
+        echo '&nbsp;&nbsp;&nbsp;Overwrite the "Open glossary term page in a new windows/tab?" setting on this page.</label>';
         echo '</div>';
 
         do_action('cmtt_add_disables_metabox', $post);
@@ -2892,13 +2904,22 @@ class CMTT_Pro {
             update_post_meta($post_id, '_cmtt_highlightFirstOnly', $highlightFirstOnly);
 
             /*
-             * Overwrite the hightlight first only setting for page
+             * Overwrite the disable acf
              */
             $disableACFForPage = 0;
             if (isset($post["cmtt_disable_acf_for_page"]) && $post["cmtt_disable_acf_for_page"] == 1) {
                 $disableACFForPage = 1;
             }
             update_post_meta($post_id, '_cmtt_disable_acf_for_page', $disableACFForPage);
+
+            /*
+             * Overwrite the disable acf
+             */
+            $newPageException = 0;
+            if (isset($post["cmtt_new_page_exception"]) && $post["cmtt_new_page_exception"] == 1) {
+                $newPageException = 1;
+        }
+            update_post_meta($post_id, '_cmtt_new_page_exception', $newPageException);
         }
 
         if ('glossary' != $postType) {

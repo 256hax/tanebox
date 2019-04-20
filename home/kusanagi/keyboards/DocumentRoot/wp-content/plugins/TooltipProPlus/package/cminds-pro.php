@@ -1,9 +1,9 @@
 <?php
 
-namespace com\cminds\package\pro\v1_8_6;
+namespace com\cminds\package\pro\v1_8_8;
 
 if ( !defined( __NAMESPACE__ . '\PLATFORM_VERSION' ) ) {
-    define( __NAMESPACE__ . '\PLATFORM_VERSION', '1_8_6' );
+    define( __NAMESPACE__ . '\PLATFORM_VERSION', '1_8_8' );
 }
 if ( !class_exists( __NAMESPACE__ . '\CmindsProPackage' ) ) {
 

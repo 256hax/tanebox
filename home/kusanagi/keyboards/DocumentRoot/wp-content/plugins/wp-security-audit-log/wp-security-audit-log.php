@@ -4,7 +4,7 @@
  * Plugin URI: http://www.wpsecurityauditlog.com/
  * Description: Identify WordPress security issues before they become a problem. Keep track of everything happening on your WordPress including WordPress users activity. Similar to Windows Event Log and Linux Syslog, WP Security Audit Log generates a security alert for everything that happens on your WordPress blogs and websites. Use the Audit Log Viewer included in the plugin to see all the security alerts.
  * Author: WP White Security
- * Version: 3.3.1.2
+ * Version: 3.4.0.1
  * Text Domain: wp-security-audit-log
  * Author URI: http://www.wpwhitesecurity.com/
  * License: GPL2
@@ -54,11 +54,11 @@ if ( ! function_exists( 'wsal_freemius' ) ) {
 		 *
 		 * @var string
 		 */
-		public $version = '3.3.1.2';
+		public $version = '3.4.0.1';
 
 		// Plugin constants.
 		const PLG_CLS_PRFX    = 'WSAL_';
-		const MIN_PHP_VERSION = '5.3.0';
+		const MIN_PHP_VERSION = '5.5.0';
 		const OPT_PRFX        = 'wsal-';
 
 		/**
@@ -238,7 +238,7 @@ if ( ! function_exists( 'wsal_freemius' ) ) {
 			register_activation_hook( __FILE__, array( $this, 'Install' ) );
 
 			// Listen for init event.
-			add_action( 'init', array( $this, 'init' ) );
+			add_action( 'init', array( $this, 'init' ), 5 );
 
 			// Listen for cleanup event.
 			add_action( 'wsal_cleanup', array( $this, 'CleanUp' ) );
@@ -284,6 +284,8 @@ if ( ! function_exists( 'wsal_freemius' ) ) {
 			wsal_freemius()->add_filter( 'show_admin_notice', array( $this, 'freemius_show_admin_notice' ), 10, 2 );
 			wsal_freemius()->add_filter( 'show_delegation_option', '__return_false' );
 			wsal_freemius()->add_filter( 'enable_per_site_activation', '__return_false' );
+			wsal_freemius()->add_filter( 'show_trial', '__return_false' );
+			wsal_freemius()->add_filter( 'opt_in_error_message', array( $this, 'limited_license_activation_error' ), 10, 1 );
 		}
 
 		/**
@@ -397,6 +399,7 @@ if ( ! function_exists( 'wsal_freemius' ) ) {
 					'target' => array(),
 				),
 				'br'     => array(),
+				'code'   => array(),
 				'em'     => array(),
 				'strong' => array(),
 				'p'      => array(
@@ -565,6 +568,23 @@ if ( ! function_exists( 'wsal_freemius' ) ) {
 				return $show;
 			}
 			return false;
+		}
+
+		/**
+		 * Limited License Activation Error.
+		 *
+		 * @param string $error - Error Message.
+		 * @return string
+		 */
+		public function limited_license_activation_error( $error ) {
+			$site_count = null;
+			preg_match( '!\d+!', $error, $site_count );
+
+			if ( ! empty( $site_count[0] ) ) {
+				/* Translators: Number of sites */
+				$error = sprintf( esc_html__( 'The license is limited to %s sub-sites. You need to upgrade your license to cover all the sub-sites on this network.', 'wp-security-audit-log' ), $site_count[0] );
+			}
+			return $error;
 		}
 
 		/**
@@ -1305,7 +1325,7 @@ if ( ! function_exists( 'wsal_freemius' ) ) {
 		 * Set a global option.
 		 *
 		 * @param string $option - Option name.
-		 * @param mixed  $value  - New value for option.
+		 * @param mixed  $value - New value for option.
 		 * @param string $prefix - (Optional) A prefix used before option name.
 		 */
 		public function SetGlobalOption( $option, $value, $prefix = self::OPT_PRFX ) {

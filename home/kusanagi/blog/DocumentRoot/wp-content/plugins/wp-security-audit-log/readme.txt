@@ -3,10 +3,10 @@ Contributors: WPWhiteSecurity, robert681
 Plugin URI: http://www.wpsecurityauditlog.com
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Tags: wordpress security plugin, wordpress security audit log, audit log, activity logs, event log wordpress, wordpress user tracking, wordpress activity log, wordpress audit, security event log, audit trail, wordpress security monitor, wordpress admin, wordpress admin monitoring, user activity, admin, multisite, dashboard, notification, wordpress monitoring, email notification, wordpress email alerts, tracking, user tracking, user activity report, wordpress audit trail
+Tags: wordpress security plugin, wordpress security audit log, audit log, activity logs, event log wordpress, wordpress user tracking, wordpress activity log, wordpress audit, security event log, audit trail, wordpress security monitor, wordpress admin, wordpress admin monitoring, user activity, admin, multisite, dashboard, notification, wordpress monitoring, email notification, wordpress email alerts, SMS messages, tracking, user tracking, user activity report, wordpress audit trail
 Requires at least: 3.6
-Tested up to: 5.1.0
-Stable tag: 3.3.1.2
+Tested up to: 5.1.1
+Stable tag: 3.4.0.1
 Requires PHP: 5.4.43
 
 An easy to use & comprehensive WordPress activity log plugin to log all changes on WordPress sites & multisite networks.
@@ -75,11 +75,12 @@ Refer to [WordPress Activity Log Events](https://www.wpsecurityauditlog.com/supp
 * Log off any user with just a click,
 * Generate HTML and CSV reports,
 * Export the activity log in CSV (ideal for integrations),
-* Get instantly notified via email of important changes,
+* Get notified via email of important changes,
+* Get instant SMS message notifications of critical site changes,
 * Search the activity log using text-based searches,
 * Use built-in filters to fine tune the searches,
 * Store activity log in an external database to improve security,
-* Integrate & centralize the WordPress activity log in syslog, Papertrail and other third party log management solutions,
+* Mirror the WordPress activity logs to Slack, Papertrail, Syslog and other central log management and collaboration solutions,
 * Configure archiving and mirroring of logs.
 
 See our [premium features page](https://www.wpsecurityauditlog.com/premium-features/) for more detailed information.
@@ -142,6 +143,7 @@ We need help translating the plugin and the WordPress Security Alerts. Please vi
 
 * Italian translation by [Leonardo Musumeci](http://leonardomusumeci.net/)
 * German translation by [Mourad Louha](http://excel-translator.de)
+* Brazilian Portuguese translation by [Hudson Santos](https://www.smallbee.com.br/)
 * Spanish translation by the [WP Body team](https://wpbody.com/)
 * French translations by Denis Moscato
 
@@ -195,19 +197,8 @@ Please refer to our [Support & Documentation pages](https://www.wpsecurityauditl
 
 == Changelog ==
 
-Release notes: [Activity Log Coverage of WooCommerce Variable Products](https://www.wpsecurityauditlog.com/releases/support-woocommerce-variable-products)
-
-= 3.3.1.2 (2019-02-25) =
-
-* **New Activity Log Events for WooCommerce**
-	* Event ID 9078: Changed the option to include / exclude taxes in product prices.
-	* Event ID 9079: Changed the option on what type of shipping to calculate tax on.
-	* Event ID 9080: Changed the shipping tax class.
-	* Event ID 9081: Enabled / Disabled the rounding of the sub total.
-	* Event ID 9082: Added / Deleted / Modified a shipping zone on WooCommerce. 
-
-* **Plugin Improvements**
-	* Better handling of plugin activation on multisite - plugin can only be activated from the network dashboard.
+= 3.4.0.1 (2019-04-10) =
 
 * **Bug Fixes**
-	* Updated Freemius SDK which includes a security fix.
+	* Backward compatibility issue for PHP 5.4.
+	* Fix for audit log page search extension check function.

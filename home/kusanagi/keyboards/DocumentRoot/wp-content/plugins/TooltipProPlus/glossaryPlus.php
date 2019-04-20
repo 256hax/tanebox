@@ -1970,7 +1970,7 @@ class CMTT_Glossary_Plus {
 
         $hideAbbreviations = !empty($shortcodeAtts['hide_abbrevs']);
 
-        if ($hideAbbreviations || !$addAbbreviationsToTheGlossaryIndex || get_option('cmtt_disableGlossaryAbbr', 0) == 1) {
+        if ($hideAbbreviations || !$addAbbreviationsToTheGlossaryIndex) {
             return $glossariIndexContentArr;
         }
         /*
@@ -2762,7 +2762,9 @@ class CMTT_Glossary_Plus {
      * @return string
      */
     public static function addAbbreviation($title = '', $id = null) {
-        if ($id) {
+        $addAbbreviationsToTitle = get_option('cmtt_glossaryAbbreviationsInTitle', 1);
+        
+        if ($id && $addAbbreviationsToTitle) {
             $glossaryItem = get_post($id);
             if ($glossaryItem && 'glossary' == $glossaryItem->post_type) {
                 $abbreviation = CMTT_Abbreviations::getAbbreviation($id);
