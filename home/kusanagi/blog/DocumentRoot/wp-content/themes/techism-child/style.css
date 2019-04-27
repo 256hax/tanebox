@@ -1,0 +1,22 @@
+/*
+Theme Name: Techism Child
+Template: techism
+
+Theme URI: http://rajeebbanstola.com.np/themes/techism/
+Author: Rajeeb
+Author URI: http://rajeebbanstola.com.np/
+Description: Techism is a light weight, simple yet fully responsive WordPress theme that looks great on any device. Other features include easy customization using live customizer page, responsive slider on homepage, optional 1 - 3 columns layout, optional 4 columns footer layout, fast loading, new icon fonts , custom menu, header image and background image.
+Version: 3.0.2
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: one-column, two-columns,three-columns, right-sidebar, left-sidebar, custom-background, custom-header, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, translation-ready, threaded-comments, blog
+Text Domain: techism
+*/
+
+a {
+  color: #3CAEA3;
+}
+
+.archive-title, .page-title, .widget-title, .entry-content th, .comment-content th {
+  border-top-color: #20639B;
+}
