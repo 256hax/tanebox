@@ -13,10 +13,47 @@ Tags: one-column, two-columns,three-columns, right-sidebar, left-sidebar, custom
 Text Domain: techism
 */
 
+/*
+ --- Color Pattern ---
+  Blue:   #30A9DE
+  Yellow: #EFDC05
+  Red:    #E53A40
+  Black:  #090707
+*/
+
+/*--- Common ---*/
 a {
-  color: #3CAEA3;
+  color: #30A9DE;
+}
+
+a:hover {
+  color: #30A9DE;
+  text-decoration: underline;
+}
+
+/*--- Content Area ---*/
+.entry-content code, code {
+  padding: 5px;
+}
+
+.entry-header .entry-title a {
+  color: #30A9DE;
+}
+
+.entry-content a:visited,
+.comment-content a:visited {
+    color: #30A9DE;
+}
+
+/*--- Header/Footer, Side menu ---*/
+.site-header h1 a:hover, .site-header h2 a:hover {
+    color: #555555;
 }
 
 .archive-title, .page-title, .widget-title, .entry-content th, .comment-content th {
-  border-top-color: #20639B;
+  border-top-color: #090707;
+}
+
+.widget-area .widget a:visited {
+    color: #30A9DE;
 }
