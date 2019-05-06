@@ -2,6 +2,7 @@
 # /var/
 #----------------------------------
 /var/backup/*
+*.pem
 
 #----------------------------------
 # /home/[user]/
@@ -19,6 +20,12 @@ kusanagi.pem
 .mysql_history
 # mysql user and passwd
 .my.cnf
+
+#----------------------------------
+# /home/256hax/
+#----------------------------------
+home/256hax/docs/server_info/*
+!home/256hax/docs/server_info/export-server_info.sh
 
 #----------------------------------
 # WordPress
