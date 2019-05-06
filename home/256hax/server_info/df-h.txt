@@ -1,9 +1,0 @@
-ファイルシス                  サイズ  使用  残り 使用% マウント位置
-/dev/vda4                        26G  4.7G   21G   19% /
-devtmpfs                        486M     0  486M    0% /dev
-tmpfs                           496M     0  496M    0% /dev/shm
-tmpfs                           496M   51M  446M   11% /run
-tmpfs                           496M     0  496M    0% /sys/fs/cgroup
-/dev/vda2                       497M  215M  282M   44% /boot
-tmpfs                           100M     0  100M    0% /run/user/1002
-https://uno.teracloud.jp/dav/    26G   13G   13G   50% /mnt/teracloud
