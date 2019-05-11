@@ -28,7 +28,7 @@ home/256hax/docs/server_info/*
 !home/256hax/docs/server_info/export-server_info.sh
 
 #----------------------------------
-# WordPress
+# WordPress Common
 #----------------------------------
 *.log
 wp-config.php
@@ -40,6 +40,12 @@ wp-config.php
 **/wp-content/uploads/backwpup-*
 **/wp-content/uploads/backwpup-*
 **/wp-content/uploads/wp-security-audit-log/*
+
+#----------------------------------
+# WordPress Themes
+#----------------------------------
+**/themes/twentyfifteen
+**/themes/twentyseventeen
 
 #----------------------------------
 # Editor Tool and Mac Config
