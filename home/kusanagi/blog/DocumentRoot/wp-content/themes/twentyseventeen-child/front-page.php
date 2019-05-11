@@ -63,7 +63,7 @@ get_header(); ?>
 				<?php
 				$count_posts = wp_count_posts();
 				$num = $count_posts->publish;
-				echo '全部で' . $num . '件の投稿があります。';
+				echo 'おおよそ' . $num . '件のハマったところを解決しました。';
 				?>
 			</div>
 
