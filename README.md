@@ -2,18 +2,28 @@
 My pet PJT.
 Web service on WordPress with KUSANAGI VM.
 
-## Setup
+## Technologies
+### Frontend Layer
+- WordPress Theme
+- Google Japanese Fonts [(font-family: 'Noto Sans JP')](https://fonts.google.com/specimen/Noto+Sans+JP)
 
-### /home/kusanagi/
-- Download /home/kusanagi/
-- make SSH (~/.ssh/)
-- make .htpasswd for Basic Auth
-- make Let's Encrypt cert
+### Application Layer
+- [WordPress x KUSANAGI](https://kusanagi.tokyo/) 🗡
+- Test Tool: [Selenium IDE](https://chrome.google.com/webstore/detail/selenium-ide/mooikfkahbdckldjjndioackbalphokd?hl=ja)
 
-### /home/kusanagi/[Web Service]/
-- make wp-config.php
+### Middleware Layer
+- [Nginx](https://nginx.org/en/)
+- [MariaDB](https://mariadb.org/) 膃肭臍
 
-## Test
+### Infra Layer
+- [CentOS](https://www.centos.org/)
+- [Sakura VPS](https://vps.sakura.ad.jp/)
+
+### Development
+- CI Tool: [Travis CI](https://travis-ci.org/256hax/ujull-gnote)
+- Repository: [GitHub](https://github.com/256hax/tanebox)
+
+## Test Tool
 /home/256hax/selenium_ide/
 
 ## Maintenance
@@ -24,7 +34,5 @@ Web service on WordPress with KUSANAGI VM.
 3. Commit and Push to GitHub change source code.
 
 ### Update Server Information
-Execute export-server_info.sh.
+Run export-server_info.sh.
 `$ /home/256hax/server_info/export-server_info.sh`
-
-Update each list. See same directory files.

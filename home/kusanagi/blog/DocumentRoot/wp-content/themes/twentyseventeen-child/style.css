@@ -41,3 +41,7 @@ h1, h2, h3, h4, h5 {
 .entry-title.top a {
   padding-left: 1px; /* Design bug fix */
 }
+
+.page-header.top {
+  margin: 4em 0;
+}

@@ -16,6 +16,10 @@ get_header(); ?>
 
 <div class="wrap">
 
+	<header class="page-header top">
+		<div class="page-title">最近の投稿</div>
+	</header><!-- .page-header -->
+
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -54,6 +58,14 @@ get_header(); ?>
 
 		endif; // The if ( 0 !== twentyseventeen_panel_count() ) ends here.
 			?>
+
+			<div>
+				<?php
+				$count_posts = wp_count_posts();
+				$num = $count_posts->publish;
+				echo '全部で' . $num . '件の投稿があります。';
+				?>
+			</div>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
