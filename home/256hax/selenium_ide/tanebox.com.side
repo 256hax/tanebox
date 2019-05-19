@@ -1,6 +1,6 @@
 {
   "id": "99c95d39-3d13-4230-95cd-3ce641cc4c3d",
-  "version": "1.1",
+  "version": "2.0",
   "name": "tanebox.com",
   "url": "",
   "tests": [{
@@ -127,7 +127,7 @@
         ["xpath=//article[@id='post-609']/header/h1", "xpath:idRelative"],
         ["xpath=//h1", "xpath:position"]
       ],
-      "value": "Massdropで日本からキーボード関連を購入する方法"
+      "value": "Drop (Massdrop, Inc.)で日本からキーボード関連を購入する方法"
     }, {
       "id": "f14facb1-1568-4a59-a294-0509f9a4b138",
       "comment": "",
