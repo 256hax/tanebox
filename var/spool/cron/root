@@ -7,19 +7,30 @@
 # | | | | |
 # * * * * * 実行されるコマンド
 
-# Init log file before run cron
+## Init log file before run cron
+#
 0 0 * * * echo --- Init `date +"\%Y\%m\%d"`--- > /var/log/cron-root/`date +"\%d"`.log
 
-# Renew Let's Encrypt SSL cert
+## Renew Let's Encrypt SSL cert
+#
 30 03 * * 5 echo --- Let's Encrypt `date +"\%d"`--- >> /var/log/cron-root/`date +"\%d"`.log
 30 03 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/root-html -d tanebox.com --post-hook "systemctl restart nginx" >> /var/log/cron-root/`date +"\%d"`.log 2>&1
 40 03 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/blog/DocumentRoot -d blog.tanebox.com --post-hook "systemctl restart nginx" >> /var/log/cron-root/`date +"\%d"`.log 2>&1
 50 03 * * 5 certbot-auto certonly --webroot -w /home/kusanagi/keyboards/DocumentRoot -d keyboards.tanebox.com --post-hook "systemctl restart nginx" >> /var/log/cron-root/`date +"\%d"`.log 2>&1
 
-# mysqldump for Backup
-0 04 * * 5 echo --- mysqldump `date +"\%Y\%m\%d"`--- >> /var/log/cron-root/`date +"\%d"`.log
+## mysqldump for weekly backup
+#
+0 04 * * 5 echo --- mysqldump for weekly backup `date +"\%Y\%m\%d"` --- >> /var/log/cron-root/`date +"\%d"`.log
 0 04 * * 5 /usr/bin/mysqldump --defaults-file=/root/.my.cnf --all-databases > /var/backup/mysql/mysqldump-all-databases_day`date +"\%d"`.sql
 
-## latest Backup to TeraCLOUD
+## mysqldump for monthly backup
+#
+30 04 1 * * echo --- mysqldump for monthly backup `date +"\%Y\%m\%d"` --- >> /var/log/cron-root/`date +"\%d"`.log
 30 04 1 * * /usr/bin/mysqldump --defaults-file=/root/.my.cnf --all-databases > /var/backup/mysql/mysqldump-all-databases_latest.sql
-00 05 1 * * cp /var/backup/mysql/mysqldump-all-databases_latest.sql /mnt/teracloud/tanebox/mysql/
+
+## Backup to TeraCLOUD
+#
+0 05 1 * * echo --- Backup to TeraCLOUD `date +"\%Y\%m\%d"` --- >> /var/log/cron-root/`date +"\%d"`.log
+0 05 1 * * zip -r /var/backup/mysql.zip /var/backup/mysql
+# write force command => "\cp -f"
+10 05 1 * * \cp -f /var/backup/mysql.zip /mnt/teracloud/tanebox/mysql/ >> /var/log/cron-root/`date +"\%d"`.log 2>&1
