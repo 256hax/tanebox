@@ -27,4 +27,9 @@ remove_action('do_feed_rss2', 'do_feed_rss2');
 remove_action('do_feed_atom', 'do_feed_atom');
 remove_action('wp_head', 'feed_links', 2);
 remove_action('wp_head', 'feed_links_extra', 3);
+
+/*--- Stop replacement half-width jp char to full-width jp char (ex: double quotation) ---*/
+remove_filter('the_content', 'wptexturize');
+remove_filter('the_excerpt', 'wptexturize');
+remove_filter('the_title', 'wptexturize');
 ?>
