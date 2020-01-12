@@ -32,4 +32,7 @@ remove_action('wp_head', 'feed_links_extra', 3);
 remove_filter('the_content', 'wptexturize');
 remove_filter('the_excerpt', 'wptexturize');
 remove_filter('the_title', 'wptexturize');
+
+// Remove Syntax Highlighting for Markdown Editor Plugins
+add_filter( 'markdown_editor_highlight', '__return_false' );
 ?>

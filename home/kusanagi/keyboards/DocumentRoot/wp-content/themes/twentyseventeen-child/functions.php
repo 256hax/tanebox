@@ -35,4 +35,7 @@ remove_action('do_feed_rss2', 'do_feed_rss2');
 remove_action('do_feed_atom', 'do_feed_atom');
 remove_action('wp_head', 'feed_links', 2);
 remove_action('wp_head', 'feed_links_extra', 3);
+
+// Remove Syntax Highlighting for Markdown Editor Plugins
+add_filter( 'markdown_editor_highlight', '__return_false' );
 ?>
