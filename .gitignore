@@ -32,7 +32,15 @@ home/256hax/docs/server_info/*
 #----------------------------------
 *.log
 wp-config.php
-**/plugins/
+**/wp-content/plugins/*
+
+#--- Shortcodes Ultimate ---
+# It need to fullpath
+!/home/kusanagi/keyboards/DocumentRoot/wp-content/plugins/shortcodes-ultimate/
+/home/kusanagi/keyboards/DocumentRoot/wp-content/plugins/shortcodes-ultimate/*
+# Customize files
+!/home/kusanagi/keyboards/DocumentRoot/wp-content/plugins/shortcodes-ultimate/templates/
+
 **/wp-content/advanced-cache.php
 **/wp-content/backup-db/*
 **/wp-content/backups/*
